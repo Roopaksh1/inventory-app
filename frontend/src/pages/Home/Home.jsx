@@ -20,7 +20,7 @@ const Home = () => {
         <div className="flex justify-center w-80 md:w-[32rem]">
           <img src={image} alt=" " className="" />
         </div>
-        <button className="md:hidden mt-12 text-xl border border-black rounded-2xl p-2 bg-green-300">
+        <button className="md:hidden mt-8 sm:mt-12 text-xl border border-black rounded-2xl p-2 bg-green-300">
           <NavLink to={'/dashboard'}>Get Started</NavLink>
         </button>
       </main>
