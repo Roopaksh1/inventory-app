@@ -1,4 +1,14 @@
+import { useContext } from "react";
+import { ProductContext } from "./dashboard";
+import ProductView from "./ProductView";
+
 const Product = ({ products, limit, search }) => {
+  const {setProductView} = useContext(ProductContext);
+  const showView = (e) => {
+    const product = products.find((p) => p.id == e.target.getAttribute('data-id'));
+    setProductView(<ProductView product={product}/>);
+  }
+
   const getProducts = () => {
     const allProducts = products.map((p) => {
       let flag = true;
@@ -12,11 +22,11 @@ const Product = ({ products, limit, search }) => {
           <tr key={p.id} className="border-b-2 md:hover:bg-[#f5f5f5]">
             <td>{p.name}</td>
             <td>
-              <button
+              <button onClick={showView}
                 data-id={p.id}
                 className="mr-2 md:hover:bg-[#efedf2] md:p-1"
               >
-                <i className="fa-solid fa-eye text-green-400"></i>
+                <i className="fa-solid fa-eye text-green-400" data-id={p.id}></i>
                 <br />
                 View
               </button>
@@ -24,12 +34,12 @@ const Product = ({ products, limit, search }) => {
                 data-id={p.id}
                 className="mr-2 md:hover:bg-[#efedf2] md:p-1"
               >
-                <i className="fa-solid fa-pen-to-square"></i>
+                <i className="fa-solid fa-pen-to-square" data-id={p.id}></i>
                 <br />
                 Edit
               </button>
               <button data-id={p.id} className="md:hover:bg-[#efedf2] md:p-1">
-                <i className="fa-solid fa-trash text-red-500"></i>
+                <i className="fa-solid fa-trash text-red-500" data-id={p.id}></i>
                 <br />
                 Delete
               </button>
@@ -37,7 +47,7 @@ const Product = ({ products, limit, search }) => {
             <td>{p.category}</td>
             <td>{p.price}</td>
             <td>{p.quantity}</td>
-            <td>{p.value}</td>
+            <td>{p.price * p.quantity}</td>
           </tr>
         )
       );

@@ -8,10 +8,12 @@ const ItemSchema = new Schema({
   },
   description: {
     type: String,
+    maxLength: 20,
   },
   category: {
     type: Schema.Types.ObjectId,
     ref: 'Category',
+    required: true,
   },
   price: {
     type: Number,
@@ -23,6 +25,10 @@ const ItemSchema = new Schema({
   },
   imageUrl: {
     type: String,
+    validate: {
+      validator: (v) => v.match(/(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))/i),
+      message: (props) => `${props.value} is not an image url.` 
+    }
   },
 });
 
