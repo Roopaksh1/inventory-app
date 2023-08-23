@@ -1,15 +1,24 @@
 import { useContext } from "react";
 import { ProductContext } from "./dashboard";
 import ProductView from "./ProductView";
+import DeleteButton from "../../components/DeleteButton";
 
 const Product = ({ products, limit, search }) => {
-  const {setProductView} = useContext(ProductContext);
-  const showView = (e) => {
+  const {setView} = useContext(ProductContext);
+  const showProductView = (e) => {
     const product = products.find((p) => p.id == e.target.getAttribute('data-id'));
-    setProductView(<ProductView product={product}/>);
+    setView(<ProductView product={product}/>);
   }
-
+  const showDeleteView = (e) => {
+    const product = products.find((p) => p.id == e.target.getAttribute('data-id'));
+    setView(<DeleteButton product={product}/>);
+  }
+  const showEditView = (e) => {
+    const product = products.find((p) => p.id == e.target.getAttribute('data-id'));
+    setView(<ProductView product={product}/>);
+  }
   const getProducts = () => {
+    if (products.length === 0) return null;
     const allProducts = products.map((p) => {
       let flag = true;
       if (search.trimStart() != '') {
@@ -19,10 +28,10 @@ const Product = ({ products, limit, search }) => {
       }
       return (
         flag && (
-          <tr key={p.id} className="border-b-2 md:hover:bg-[#f5f5f5]">
+          <tr key={p._id} className="border-b-2 md:hover:bg-[#f5f5f5]">
             <td>{p.name}</td>
             <td>
-              <button onClick={showView}
+              <button onClick={showProductView}
                 data-id={p.id}
                 className="mr-2 md:hover:bg-[#efedf2] md:p-1"
               >
@@ -38,7 +47,7 @@ const Product = ({ products, limit, search }) => {
                 <br />
                 Edit
               </button>
-              <button data-id={p.id} className="md:hover:bg-[#efedf2] md:p-1">
+              <button data-id={p.id} className="md:hover:bg-[#efedf2] md:p-1" onClick={showDeleteView}>
                 <i className="fa-solid fa-trash text-red-500" data-id={p.id}></i>
                 <br />
                 Delete

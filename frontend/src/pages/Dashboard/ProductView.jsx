@@ -2,8 +2,7 @@ import { useContext, useRef } from 'react';
 import { ProductContext } from './dashboard';
 
 const ProductView = ({ product }) => {
-  console.log(product);
-  const { setProductView } = useContext(ProductContext);
+  const { setView } = useContext(ProductContext);
   const view = useRef();
   const handleClick = (e) => {
     if (!view.current.contains(e.target)) {
@@ -11,7 +10,7 @@ const ProductView = ({ product }) => {
     }
   };
   const closeView = () => {
-    setProductView(null);
+    setView(null);
   }
   return (
     <div
@@ -45,10 +44,10 @@ const ProductView = ({ product }) => {
             {product.price * product.quantity}
           </span>
         </p>
-        <p className="font-bold">
+        <div className="font-bold">
           Description:{' '}
-          <span className=" font-normal">{product.description}</span>
-        </p>
+          <p className=" font-normal">{product.description}</p>
+        </div>
       </main>
     </div>
   );

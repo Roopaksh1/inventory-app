@@ -69,11 +69,11 @@ const ProductTable = ({ products, query }) => {
 
   return (
     <div className=" max-w-full sm:self-stretch">
-      <div className='overflow-auto flex flex-col'>
+      <div className="overflow-auto flex flex-col">
         <table className="shadow border table-fixed min-w-max text-center">
           <thead className="">
             <tr className="border-b-2">
-              <th className='w-[10rem]'>Name</th>
+              <th className="w-[10rem]">Name</th>
               <th>Action</th>
               <th>Category</th>
               <th>Price</th>
