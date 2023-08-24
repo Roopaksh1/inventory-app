@@ -1,6 +1,7 @@
 export const initialProductState = {
   data: null,
   loading: true,
+  totalCategory: 0,
 };
 
 export const productReducer = (state, action) => {
@@ -8,7 +9,8 @@ export const productReducer = (state, action) => {
     case 'data_fetched': {
       return {
         ...state,
-        data: action.payload,
+        data: action.data,
+        totalCategory: action.length,
       };
     }
     case 'loaded': {
@@ -20,10 +22,17 @@ export const productReducer = (state, action) => {
     case 'deleted': {
       return {
         ...state,
-        data: action.payload,
+        data: action.data,
+        totalCategory: action.length,
       };
     }
     case 'updated': {
+      return {
+        ...state,
+        data: action.payload,
+      };
+    }
+    case 'added': {
       return {
         ...state,
         data: action.payload,

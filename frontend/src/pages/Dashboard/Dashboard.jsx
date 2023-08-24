@@ -5,7 +5,7 @@ import {
   initialProductState,
   productReducer,
 } from '../../reducer/productReducer';
-import { GET_CATEGORY, GET_PRODUCT } from '../../utils/constant';
+import { GET_PRODUCT } from '../../utils/constant';
 import { API_CLIENT } from '../../utils/api';
 import Loading from '../../components/Loading';
 
@@ -18,22 +18,21 @@ const Dashboard = () => {
   const [productName, setProductName] = useState('');
   const [View, setView] = useState(null);
   const [state, dispatch] = useReducer(productReducer, initialProductState);
-  const [totalCategory, setTotalCategory] = useState(0);
 
   useEffect(() => {
     const loadProducts = () => {
       API_CLIENT.get(GET_PRODUCT)
-        .then((res) => dispatch({ type: 'data_fetched', payload: res.data }))
+        .then((res) =>
+          dispatch({
+            type: 'data_fetched',
+            data: res.data.products,
+            length: res.data.totalCategory,
+          })
+        )
         .catch((err) => console.log(err))
         .finally(dispatch({ type: 'loaded' }));
     };
-    const loadCategory = () => {
-      API_CLIENT.get(GET_CATEGORY)
-        .then((res) => setTotalCategory(res.data.length))
-        .catch((err) => console.log(err));
-    };
     loadProducts();
-    loadCategory();
   }, []);
 
   const getOutOfStock = () => {
@@ -86,7 +85,7 @@ const Dashboard = () => {
             <p className="flex-grow">
               Total Categories
               <br />
-              {totalCategory}
+              {state.totalCategory}
             </p>
           </div>
         </div>

@@ -19,7 +19,8 @@ const DeleteProduct = ({ product }) => {
     API_CLIENT.delete(DELETE_PRODUCT + '/' + product._id).then((res) =>
       dispatch({
         type: 'deleted',
-        payload: res.data,
+        data: res.data.products,
+        length: res.data.totalCategory,
       })
     );
     closeView();
