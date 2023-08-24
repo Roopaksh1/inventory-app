@@ -1,7 +1,10 @@
-import Form from "../../components/Form";
+import Form from '../../components/Form';
 
 const AddProduct = () => {
- return <Form/>
-}
+  const onSubmit = () => {
+    
+  };
+  return <Form submitForm={onSubmit} />;
+};
 
 export default AddProduct;
