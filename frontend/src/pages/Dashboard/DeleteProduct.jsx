@@ -1,8 +1,10 @@
 import { useContext, useRef } from 'react';
-import { ProductContext } from '../pages/Dashboard/dashboard';
+import { ProductContext } from './dashboard';
+import { API_CLIENT } from '../../utils/api';
+import { DELETE_PRODUCT } from '../../utils/constant';
 
-const DeleteButton = ({ product }) => {
-  const { setView } = useContext(ProductContext);
+const DeleteProduct = ({ product }) => {
+  const { setView, dispatch } = useContext(ProductContext);
   const view = useRef();
   const handleClick = (e) => {
     if (!view.current.contains(e.target)) {
@@ -12,6 +14,17 @@ const DeleteButton = ({ product }) => {
   const closeView = () => {
     setView(null);
   };
+
+  const deleteProduct = () => {
+    API_CLIENT.delete(DELETE_PRODUCT + '/' + product._id).then((res) =>
+      dispatch({
+        type: 'deleted',
+        payload: res.data,
+      })
+    );
+    closeView();
+  };
+
   return (
     <div
       className="fixed top-0 left-0 min-w-[100vw] min-h-[100vh] bg-[#00000080] flex justify-center items-center"
@@ -28,7 +41,10 @@ const DeleteButton = ({ product }) => {
           Are you sure you want to delete {product.name}.
         </p>
         <div className="flex justify-between">
-          <button className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+          <button
+            className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+            onClick={deleteProduct}
+          >
             Delete
           </button>
           <button
@@ -43,4 +59,4 @@ const DeleteButton = ({ product }) => {
   );
 };
 
-export default DeleteButton;
+export default DeleteProduct;

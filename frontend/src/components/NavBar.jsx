@@ -25,6 +25,14 @@ const NavBar = () => {
             Home
           </NavLink>
           <NavLink
+            to={'/category'}
+            className={({ isActive }) =>
+              isActive ? 'border-b-2 border-red-400 scale-110' : ''
+            }
+          >
+            Categories
+          </NavLink>
+          <NavLink
             to={'/dashboard'}
             className={({ isActive }) =>
               isActive ? 'border-b-2 border-red-400 scale-110' : ''
@@ -43,18 +51,25 @@ const NavBar = () => {
         </nav>
       </header>
       <nav
-        className="flex flex-col font-semibold font-sans gap-2 navbar translate-x-full transition-transform px-4 border-b-4 border-gray-300 sm:hidden"
+        className="flex font-semibold font-sans justify-between navbar translate-x-full transition-transform px-4 border-b-4 border-gray-300 sm:hidden"
         ref={navdom}
       >
-        <NavLink to={'/'} onClick={toggle} tabIndex={-1}>
-          Home
-        </NavLink>
-        <NavLink to={'/dashboard'} onClick={toggle} tabIndex={-1}>
-          Dashboard
-        </NavLink>
-        <NavLink to={'/contact'} onClick={toggle} tabIndex={-1}>
-          Contact
-        </NavLink>
+        <div className='flex flex-col gap-2'>
+          <NavLink to={'/'} onClick={toggle} tabIndex={-1}>
+            Home
+          </NavLink>
+          <NavLink to={'/dashboard'} onClick={toggle} tabIndex={-1}>
+            Dashboard
+          </NavLink>
+          <NavLink to={'/contact'} onClick={toggle} tabIndex={-1}>
+            Contact
+          </NavLink>
+        </div>
+        <div className='flex flex-col gap-2'>
+          <NavLink to={'/category'} onClick={toggle} tabIndex={-1}>
+            Categories
+          </NavLink>
+        </div>
       </nav>
       <Outlet />
     </div>

@@ -30,7 +30,7 @@ const ProductView = ({ product }) => {
           Product Name: <span className=" font-normal">{product.name}</span>
         </p>
         <p className="font-bold">
-          Category: <span className=" font-normal">{product.category}</span>
+          Category: <span className=" font-normal">{product.category.name}</span>
         </p>
         <p className="font-bold">
           Price: <span className=" font-normal">{product.price}</span>

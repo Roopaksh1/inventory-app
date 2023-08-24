@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Product from './Product';
 
 const ProductTable = ({ products, query }) => {
@@ -66,6 +66,19 @@ const ProductTable = ({ products, query }) => {
         <i className="fa-solid fa-chevron-right mx-6 "></i>
       </button>
     );
+
+  useEffect(() => {
+    if (display.end > products.length && display.start > products.length) {
+      setDisplay((prevState) => {
+        return {
+          start: prevState.start - STEP,
+          end: products.length,
+        };
+      });
+    } else if (display.end > products.length) {
+      setDisplay({ ...display, end: products.length });
+    }
+  }, [products]);
 
   return (
     <div className=" max-w-full sm:self-stretch">

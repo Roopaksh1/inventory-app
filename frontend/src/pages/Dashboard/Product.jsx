@@ -1,22 +1,28 @@
-import { useContext } from "react";
-import { ProductContext } from "./dashboard";
-import ProductView from "./ProductView";
-import DeleteButton from "../../components/DeleteButton";
+import { useContext } from 'react';
+import { ProductContext } from './dashboard';
+import ProductView from './ProductView';
+import DeleteProduct from './DeleteProduct';
 
 const Product = ({ products, limit, search }) => {
-  const {setView} = useContext(ProductContext);
+  const { setView } = useContext(ProductContext);
   const showProductView = (e) => {
-    const product = products.find((p) => p.id == e.target.getAttribute('data-id'));
-    setView(<ProductView product={product}/>);
-  }
+    const product = products.find(
+      (p) => p._id == e.target.getAttribute('data-id')
+    );
+    setView(<ProductView product={product} />);
+  };
   const showDeleteView = (e) => {
-    const product = products.find((p) => p.id == e.target.getAttribute('data-id'));
-    setView(<DeleteButton product={product}/>);
-  }
+    const product = products.find(
+      (p) => p._id == e.target.getAttribute('data-id')
+    );
+    setView(<DeleteProduct product={product} />);
+  };
   const showEditView = (e) => {
-    const product = products.find((p) => p.id == e.target.getAttribute('data-id'));
-    setView(<ProductView product={product}/>);
-  }
+    const product = products.find(
+      (p) => p._id == e.target.getAttribute('data-id')
+    );
+    setView(<ProductView product={product} />);
+  };
   const getProducts = () => {
     if (products.length === 0) return null;
     const allProducts = products.map((p) => {
@@ -31,29 +37,41 @@ const Product = ({ products, limit, search }) => {
           <tr key={p._id} className="border-b-2 md:hover:bg-[#f5f5f5]">
             <td>{p.name}</td>
             <td>
-              <button onClick={showProductView}
-                data-id={p.id}
+              <button
+                onClick={showProductView}
+                data-id={p._id}
                 className="mr-2 md:hover:bg-[#efedf2] md:p-1"
               >
-                <i className="fa-solid fa-eye text-green-400" data-id={p.id}></i>
+                <i
+                  className="fa-solid fa-eye text-green-400"
+                  data-id={p._id}
+                ></i>
                 <br />
                 View
               </button>
               <button
-                data-id={p.id}
+                onClick={showEditView}
+                data-id={p._id}
                 className="mr-2 md:hover:bg-[#efedf2] md:p-1"
               >
-                <i className="fa-solid fa-pen-to-square" data-id={p.id}></i>
+                <i className="fa-solid fa-pen-to-square" data-id={p._id}></i>
                 <br />
                 Edit
               </button>
-              <button data-id={p.id} className="md:hover:bg-[#efedf2] md:p-1" onClick={showDeleteView}>
-                <i className="fa-solid fa-trash text-red-500" data-id={p.id}></i>
+              <button
+                data-id={p._id}
+                className="md:hover:bg-[#efedf2] md:p-1"
+                onClick={showDeleteView}
+              >
+                <i
+                  className="fa-solid fa-trash text-red-500"
+                  data-id={p._id}
+                ></i>
                 <br />
                 Delete
               </button>
             </td>
-            <td>{p.category}</td>
+            <td>{p.category.name}</td>
             <td>{p.price}</td>
             <td>{p.quantity}</td>
             <td>{p.price * p.quantity}</td>

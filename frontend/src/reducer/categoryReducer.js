@@ -1,14 +1,15 @@
-export const initialProductState = {
-  data: null,
+export const initialCategoryState = {
+  category: null,
+  product: null,
   loading: true,
 };
 
-export const productReducer = (state, action) => {
+export const categoryReducer = (state, action) => {
   switch (action.type) {
     case 'data_fetched': {
       return {
         ...state,
-        data: action.payload,
+        category: action.payload,
       };
     }
     case 'loaded': {
@@ -17,16 +18,16 @@ export const productReducer = (state, action) => {
         loading: false,
       };
     }
-    case 'deleted': {
+    case 'selected': {
       return {
         ...state,
-        data: action.payload,
+        product: action.payload,
       };
     }
-    case 'updated': {
+    case 'back': {
       return {
         ...state,
-        data: action.payload,
+        product: null,
       };
     }
   }
