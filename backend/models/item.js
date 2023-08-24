@@ -27,7 +27,7 @@ const ItemSchema = new Schema({
     type: String,
     validate: {
       validator: (v) =>
-        v.match(/(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))/i),
+        v.match(/(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg))/i),
       message: (props) => `${props.value} is not an image url.`,
     },
   },
