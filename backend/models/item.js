@@ -5,10 +5,11 @@ const ItemSchema = new Schema({
   name: {
     type: String,
     required: true,
+    lowercase: true,
   },
   description: {
     type: String,
-    maxLength: 20,
+    required: true,
   },
   category: {
     type: Schema.Types.ObjectId,
@@ -23,21 +24,16 @@ const ItemSchema = new Schema({
     type: Number,
     required: true,
   },
-  imageUrl: {
+  image: {
     type: String,
-    validate: {
-      validator: (v) =>
-        v.match(/(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg))/i),
-      message: (props) => `${props.value} is not an image url.`,
-    },
   },
   updated_at: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
   created_at: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
 });
 

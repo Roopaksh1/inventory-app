@@ -2,7 +2,6 @@ const { body, validationResult } = require('express-validator');
 const asyncHandler = require('express-async-handler');
 const Item = require('../models/item');
 const Category = require('../models/category');
-const { deleteCategory } = require('./categoryController');
 
 exports.getProducts = asyncHandler(async (req, res) => {
   const totalCategory = await Category.find({}, '_id').exec();
@@ -11,6 +10,7 @@ exports.getProducts = asyncHandler(async (req, res) => {
 });
 
 exports.addProduct = asyncHandler(async (req, res) => {
+  console.log(req.body, req.file)
   res.send('NOT IMPLEMENTED');
 });
 

@@ -6,9 +6,10 @@ const {
   updateProduct,
 } = require('../controllers/itemController');
 const router = express.Router();
+const upload = require('../utils/multer');
 
 router.get('/', getProducts);
-router.post('/add/', addProduct);
+router.post('/add', upload.single('image'), addProduct);
 router.put('/update/:id', updateProduct);
 router.delete('/delete/:id', deleteProduct);
 module.exports = router;
