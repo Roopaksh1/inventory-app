@@ -12,5 +12,6 @@ mongoose.connect(config.MONGODB_URI).catch((err) => console.log(err));
 
 app.use('/product', require('./routes/product'));
 app.use('/category', require('./routes/category'));
+app.use(require('./middleware/error'))
 
 module.exports = app;

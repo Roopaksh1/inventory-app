@@ -7,4 +7,4 @@ cloudinary.config({
   api_secret: config.CLOUDINARY_API_SECRET,
 });
 
-exports.module = cloudinary;
+module.exports = cloudinary;
