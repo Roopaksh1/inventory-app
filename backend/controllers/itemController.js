@@ -2,8 +2,9 @@ const { body, validationResult } = require('express-validator');
 const asyncHandler = require('express-async-handler');
 const Item = require('../models/item');
 const Category = require('../models/category');
-const {dataUri} = require('../middleware/multer');
-const cloudinary = require('../utils/cloudinaryConfig')
+const { dataUri } = require('../middleware/multer');
+const cloudinary = require('../utils/cloudinaryConfig');
+const path = require('path');
 
 exports.getProducts = asyncHandler(async (req, res) => {
   const totalCategory = await Category.find({}, '_id').exec();
@@ -11,9 +12,65 @@ exports.getProducts = asyncHandler(async (req, res) => {
   res.json({ products: allProducts, totalCategory: totalCategory.length });
 });
 
-exports.addProduct = asyncHandler(async (req, res) => {
-  res.send('NOT IMPLEMENTED');
-});
+exports.addProduct = [
+  body('name')
+    .trim()
+    .escape()
+    .notEmpty()
+    .withMessage('Please enter product name.'),
+  body('description')
+    .trim()
+    .escape()
+    .notEmpty()
+    .withMessage('Please enter product description.')
+    .isLength({ max: 255 })
+    .withMessage('Description can have no more than 255 characters.'),
+  body('category')
+    .trim()
+    .notEmpty()
+    .withMessage('Please enter product category.'),
+  body('price').trim().escape().isNumeric().withMessage('Invalid Price.'),
+  body('quantity').trim().escape().isNumeric().withMessage('Invalid Quantity.'),
+
+  asyncHandler(async (req, res) => {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      res.status(400);
+      throw new Error(error.errors[0].msg);
+    }
+    if (!req.file) {
+      res.status(400);
+      throw new Error('Please enter product image.');
+    }
+    const { name, description, category, price, quantity } = req.body;
+    const uploadedFile = await cloudinary.uploader.upload(
+      dataUri(req).content,
+      {
+        public_id:
+          new Date().toISOString().replace(/:/g, '-') +
+          '-' +
+          path.basename(
+            req.file.originalname,
+            path.extname(req.file.originalname)
+          ),
+        folder: 'products',
+      }
+    );
+    const fileData = {
+      public_id: uploadedFile.public_id,
+      url: uploadedFile.secure_url,
+    };
+    const product = await Item.create({
+      name,
+      description,
+      category,
+      price,
+      quantity,
+      image: fileData,
+    });
+    res.json(product);
+  }),
+];
 
 exports.updateProduct = asyncHandler(async (req, res) => {
   res.send('NOT IMPLEMENTED');
@@ -21,6 +78,7 @@ exports.updateProduct = asyncHandler(async (req, res) => {
 
 exports.deleteProduct = asyncHandler(async (req, res) => {
   const deletedProduct = await Item.findByIdAndRemove(req.params.id).exec();
+  await cloudinary.uploader.destroy(deletedProduct.image.public_id);
   const products = await Item.find({
     category: deletedProduct.category,
   }).exec();
