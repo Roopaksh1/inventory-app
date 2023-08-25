@@ -68,7 +68,15 @@ const ProductTable = ({ products, query }) => {
     );
 
   useEffect(() => {
-    if (display.end > products.length && display.start > products.length) {
+    if (products.length <= STEP) {
+      setDisplay({
+        start: 1,
+        end: products.length,
+      });
+    } else if (
+      display.end > products.length &&
+      display.start > products.length
+    ) {
       setDisplay((prevState) => {
         return {
           start: prevState.start - STEP,

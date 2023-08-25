@@ -1,7 +1,8 @@
 import { useContext } from 'react';
-import { ProductContext } from './dashboard';
+import { ProductContext } from './Dashboard';
 import ProductView from './ProductView';
 import DeleteProduct from './DeleteProduct';
+import { capitalize } from '../../utils/capitalize';
 
 const Product = ({ products, limit, search }) => {
   const { setView } = useContext(ProductContext);
@@ -35,7 +36,7 @@ const Product = ({ products, limit, search }) => {
       return (
         flag && (
           <tr key={p._id} className="border-b-2 md:hover:bg-[#f5f5f5]">
-            <td>{p.name}</td>
+            <td>{capitalize(p.name)}</td>
             <td>
               <button
                 onClick={showProductView}

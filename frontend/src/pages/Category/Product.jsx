@@ -1,3 +1,5 @@
+import { capitalize } from '../../utils/capitalize';
+
 const Product = ({ product = [], dispatch }) => {
   const goBack = () => {
     dispatch({
@@ -9,17 +11,17 @@ const Product = ({ product = [], dispatch }) => {
     return product.map((p) => (
       <div
         key={p._id}
-        className="flex flex-col w-[20rem] items-center text-start gap-2 border-2 p-2 lg:hover:shadow-lg"
+        className="flex flex-col items-center text-start gap-2 border-2 p-2 lg:hover:shadow-lg"
       >
-        <img src={p.image} alt=" " />
-        <h5 className="font-bold md:text-xl ">{p.name}</h5>
-        <p className="text-sm md:text-base overflow-auto max-h-[6rem] md:max-h-[10rem] p-1">
+        <img src={p.image.url} alt=" " />
+        <h5 className="font-bold md:text-xl ">{capitalize(p.name)}</h5>
+        <p className="text-sm md:text-base overflow-auto max-w-full max-h-[6rem] md:max-h-[10rem] p-1">
           {p.description}
         </p>
-        <p className="border-t-2 self-stretch text-center font-semibold">
+        <p className="mt-auto overflow-hidden max-w-full border-t-2 self-stretch text-center font-semibold">
           Price : ${p.price}
         </p>
-        <p>
+        <p className="overflow-hidden max-w-full">
           {p.quantity == 0 ? (
             <span className="text-red-500">Out Of Stock</span>
           ) : (

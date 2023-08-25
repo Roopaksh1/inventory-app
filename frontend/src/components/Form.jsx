@@ -10,6 +10,7 @@ const Form = ({ submitForm, options }) => {
     image: '',
     description: '',
   });
+  const form = useRef();
   const name = useRef();
   const category = useRef();
   const price = useRef();
@@ -21,20 +22,6 @@ const Form = ({ submitForm, options }) => {
     setView(null);
   };
   const handleInput = () => {
-    const file = image.current.files[0];
-    const reader = new FileReader();
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        console.log(reader.result);
-        setFormData((prevState) => {
-          return {
-            ...prevState,
-            image: reader.result,
-          };
-        });
-      };
-    }
     setFormData((prevState) => {
       return {
         ...prevState,
@@ -43,11 +30,14 @@ const Form = ({ submitForm, options }) => {
         price: price.current.value,
         quantity: quantity.current.value,
         description: description.current.value,
+        image: image.current.files[0],
       };
     });
   };
   const onSubmit = (e) => {
     e.preventDefault();
+    const data = new FormData(form.current);
+    submitForm(data);
   };
   return (
     <div className="fixed top-0 left-0 min-w-[100vw] min-h-[100vh] bg-[#00000080] flex justify-center items-center">
@@ -55,6 +45,8 @@ const Form = ({ submitForm, options }) => {
         <form
           className="p-4 bg-white rounded-lg flex flex-col gap-2 justify-stretch"
           onSubmit={onSubmit}
+          encType="multipart/form-data"
+          ref={form}
         >
           <p className="text-end text-red-600">
             <button type="button" onClick={closeView}>
@@ -71,6 +63,7 @@ const Form = ({ submitForm, options }) => {
             <input
               type="text"
               id="name"
+              name="name"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="GeForce RTX 4090"
               required
@@ -89,6 +82,7 @@ const Form = ({ submitForm, options }) => {
             </label>
             <select
               id="category"
+              name="category"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               ref={category}
               value={formData.category}
@@ -108,6 +102,7 @@ const Form = ({ submitForm, options }) => {
             <input
               type="number"
               id="price"
+              name="price"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="&#8377; 158000"
               required
@@ -126,6 +121,7 @@ const Form = ({ submitForm, options }) => {
             <input
               type="number"
               id="quantity"
+              name="quantity"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="1"
               required
@@ -137,14 +133,15 @@ const Form = ({ submitForm, options }) => {
           <p>
             <label
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              htmlFor="file_input"
+              htmlFor="image"
             >
               Upload Image <br />
               <span className="font-normal">Valid Format : png, jpeg, jpg</span>
             </label>
             <input
               className="p-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-              id="file_input"
+              id="image"
+              name="image"
               type="file"
               accept="image/png, image/jpeg, image/jpg"
               required
@@ -164,6 +161,7 @@ const Form = ({ submitForm, options }) => {
             </label>
             <textarea
               id="description"
+              name="description"
               rows="4"
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Tell us about the product"

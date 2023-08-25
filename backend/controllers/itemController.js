@@ -67,6 +67,7 @@ exports.addProduct = [
       quantity,
       image: fileData,
     });
+    await Item.populate(product, { path: 'category', select: 'name' });
     res.json(product);
   }),
 ];

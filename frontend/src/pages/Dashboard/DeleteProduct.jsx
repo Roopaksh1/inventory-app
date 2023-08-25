@@ -2,6 +2,7 @@ import { useContext, useRef } from 'react';
 import { ProductContext } from './dashboard';
 import { API_CLIENT } from '../../utils/api';
 import { DELETE_PRODUCT } from '../../utils/constant';
+import Loading from '../../components/Loading';
 
 const DeleteProduct = ({ product }) => {
   const { setView, dispatch } = useContext(ProductContext);
@@ -16,14 +17,17 @@ const DeleteProduct = ({ product }) => {
   };
 
   const deleteProduct = () => {
-    API_CLIENT.delete(DELETE_PRODUCT + '/' + product._id).then((res) =>
-      dispatch({
-        type: 'deleted',
-        data: res.data.products,
-        length: res.data.totalCategory,
+    setView(<Loading action="Deleting" bgColor="bg-[#00000080]" />);
+    API_CLIENT.delete(DELETE_PRODUCT + '/' + product._id)
+      .then((res) => {
+        dispatch({
+          type: 'deleted',
+          data: res.data.products,
+          length: res.data.totalCategory,
+        });
+        closeView();
       })
-    );
-    closeView();
+      .catch((err) => console.log(err));
   };
 
   return (

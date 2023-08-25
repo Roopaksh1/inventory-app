@@ -35,7 +35,7 @@ export const productReducer = (state, action) => {
     case 'added_product': {
       return {
         ...state,
-        data: action.payload,
+        data: [...state.data, action.payload],
       };
     }
     case 'added_category': {

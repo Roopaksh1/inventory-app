@@ -2,6 +2,7 @@ import { useContext, useRef, useState } from 'react';
 import { ProductContext } from './Dashboard';
 import { API_CLIENT } from '../../utils/api';
 import { ADD_CATEGORY } from '../../utils/constant';
+import Loading from '../../components/Loading';
 
 const AddCategory = () => {
   const { setView, dispatch } = useContext(ProductContext);
@@ -23,11 +24,13 @@ const AddCategory = () => {
       name: formData.name,
       description: formData.description,
     };
-    await API_CLIENT.post(ADD_CATEGORY, data);
-    dispatch({
-      type: 'added_category',
+    setView(<Loading action="Adding" bgColor="bg-[#00000080]" />);
+    API_CLIENT.post(ADD_CATEGORY, data).then((res) => {
+      dispatch({
+        type: 'added_category',
+      });
+      setView(null);
     });
-    setView(null);
   };
   return (
     <div className="fixed top-0 left-0 min-w-[100vw] min-h-[100vh] bg-[#00000080] flex justify-center items-center">

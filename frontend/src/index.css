@@ -18,9 +18,13 @@ td {
 .category,
 .product {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
   gap: 3rem;
 }
 
-
-
+@media (min-width: 1024px) {
+  .product,
+  .category {
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  }
+}
