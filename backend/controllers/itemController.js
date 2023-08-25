@@ -20,7 +20,6 @@ exports.addProduct = [
     .withMessage('Please enter product name.'),
   body('description')
     .trim()
-    .escape()
     .notEmpty()
     .withMessage('Please enter product description.')
     .isLength({ max: 255 })

@@ -32,10 +32,16 @@ export const productReducer = (state, action) => {
         data: action.payload,
       };
     }
-    case 'added': {
+    case 'added_product': {
       return {
         ...state,
         data: action.payload,
+      };
+    }
+    case 'added_category': {
+      return {
+        ...state,
+        totalCategory: state.totalCategory + 1,
       };
     }
   }

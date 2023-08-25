@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useReducer } from 'react';
 import { API_CLIENT } from '../../utils/api';
 import { GET_CATEGORY } from '../../utils/constant';
 import {
@@ -7,6 +7,8 @@ import {
 } from '../../reducer/categoryReducer';
 import Loading from '../../components/Loading';
 import Product from './Product';
+import { capitalize } from '../../utils/capitalize';
+import image from '../../assets/images/category-tag.png';
 
 const Category = () => {
   const [state, dispatch] = useReducer(categoryReducer, initialCategoryState);
@@ -35,11 +37,11 @@ const Category = () => {
     return state.category.map((c) => (
       <div
         key={c._id}
-        className="flex flex-col w-[20rem] items-center text-start gap-2 border-2 p-2 lg:hover:shadow-lg"
+        className="flex flex-col items-center text-start gap-2 border-2 p-2 lg:hover:shadow-lg hover:shadow-sm"
       >
-        <img src={c.image} alt=" " />
-        <h5 className="font-bold md:text-xl ">{c.name}</h5>
-        <p className="text-sm md:text-base overflow-auto max-h-[6rem] md:max-h-[10rem] p-1">
+        <img src={image} alt=" " className="w-[7rem] md:w-[10rem]" />
+        <h5 className="font-bold md:text-xl ">{capitalize(c.name)}</h5>
+        <p className="text-sm md:text-base overflow-auto max-h-[6rem] md:max-h-[10rem] max-w-full p-1">
           {c.description}
         </p>
         <button
@@ -56,9 +58,9 @@ const Category = () => {
   return state.loading || !state.category ? (
     <Loading />
   ) : !state.product ? (
-    <main className="category p-6 justify-items-center overflow-auto">{mapCategory()}</main>
+    <main className="category p-6 overflow-auto">{mapCategory()}</main>
   ) : (
-    <Product product={state.product} dispatch={dispatch}/>
+    <Product product={state.product} dispatch={dispatch} />
   );
 };
 
