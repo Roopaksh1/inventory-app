@@ -18,18 +18,18 @@ exports.addProduct = [
     .escape()
     .notEmpty()
     .withMessage('Please enter product name.'),
-  body('description')
-    .trim()
-    .notEmpty()
-    .withMessage('Please enter product description.')
-    .isLength({ max: 255 })
-    .withMessage('Description can have no more than 255 characters.'),
   body('category')
     .trim()
     .notEmpty()
     .withMessage('Please enter product category.'),
   body('price').trim().escape().isNumeric().withMessage('Invalid Price.'),
   body('quantity').trim().escape().isNumeric().withMessage('Invalid Quantity.'),
+  body('description')
+    .trim()
+    .notEmpty()
+    .withMessage('Please enter product description.')
+    .isLength({ max: 255 })
+    .withMessage('Description can have no more than 255 characters.'),
 
   asyncHandler(async (req, res) => {
     const error = validationResult(req);
