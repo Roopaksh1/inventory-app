@@ -83,7 +83,7 @@ const Form = ({
   try {
     imagePreview = <img src={URL.createObjectURL(formData.image)} alt=" " />;
   } catch (err) {
-    imagePreview = <img src={formData.image} alt=" " />;
+    imagePreview = <img src={initialData.image.url} alt=" " />;
   }
   return (
     <div className="fixed top-0 left-0 min-w-[100vw] min-h-[100vh] bg-[#00000080] flex justify-center items-center">

@@ -121,7 +121,7 @@ exports.updateProduct = [
 
     // Delete category if it is empty
     let deleted = false;
-    if (product.category !== category) {
+    if (product.category.toString() !== category) {
       const allProducts = await Item.find(
         {
           category: product.category,

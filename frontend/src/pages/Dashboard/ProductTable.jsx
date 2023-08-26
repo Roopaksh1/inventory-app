@@ -47,7 +47,7 @@ const ProductTable = ({ products, query }) => {
   };
 
   let buttonBack =
-    display.start === 1 ? (
+    (display.start === 1 || display.start === 0) ? (
       <button disabled onClick={handleBack}>
         <i className="fa-solid fa-chevron-left mx-6 text-gray-400"></i>
       </button>
@@ -68,6 +68,7 @@ const ProductTable = ({ products, query }) => {
     );
 
   useEffect(() => {
+    if (products.length === 0) return;
     if (products.length <= STEP) {
       setDisplay({
         start: 1,
