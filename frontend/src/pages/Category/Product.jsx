@@ -45,7 +45,7 @@ const Product = ({ product = [], dispatch }) => {
       >
         Back
       </button>
-      <section className="product justify-items-center">{mapProduct()}</section>
+      <section className="product">{mapProduct()}</section>
     </main>
   );
 };
