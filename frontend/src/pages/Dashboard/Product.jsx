@@ -38,7 +38,7 @@ const Product = ({ products, limit, search }) => {
         flag && (
           <tr key={p._id} className="border-b-2 md:hover:bg-[#f5f5f5]">
             <td>
-              <div className="truncate w-[25ch]">{capitalize(p.name)}</div>
+              <div className="truncate lg:w-[25ch] w-[15ch]">{capitalize(p.name)}</div>
             </td>
             <td>
               <div className="w-max whitespace-nowrap">
@@ -78,18 +78,18 @@ const Product = ({ products, limit, search }) => {
               </div>
             </td>
             <td>
-              <div className="truncate w-[25ch]">
+              <div className="truncate w-[15ch] lg:w-[25ch]">
                 {capitalize(p.category.name)}
               </div>
             </td>
             <td>
-              <div className="truncate w-[15ch]">{p.price}</div>
+              <div className="truncate w-[10ch]">{p.price}</div>
             </td>
             <td>
-              <div className="truncate w-[15ch]">{p.quantity}</div>
+              <div className="truncate w-[10ch]">{p.quantity}</div>
             </td>
             <td>
-              <div className="truncate w-[15ch]">{p.price * p.quantity}</div>
+              <div className="truncate w-[10ch]">{p.price * p.quantity}</div>
             </td>
           </tr>
         )

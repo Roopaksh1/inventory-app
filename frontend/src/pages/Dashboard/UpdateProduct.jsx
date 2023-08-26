@@ -4,6 +4,7 @@ import { API_CLIENT } from '../../utils/api';
 import { GET_CATEGORY, UPDATE_PRODUCT } from '../../utils/constant';
 import { ProductContext } from './Dashboard';
 import Loading from '../../components/Loading';
+import { toast } from 'react-toastify';
 
 const UpdateProduct = ({ product }) => {
   const { setView, dispatch } = useContext(ProductContext);
@@ -32,6 +33,7 @@ const UpdateProduct = ({ product }) => {
           data: res.data.modifiedProduct,
           categoryDeleted: res.data.flag,
         });
+        toast.success('Product Updated Successfully.', { toastId: 14 });
         setView(null);
       })
       .catch((err) => console.log(err));

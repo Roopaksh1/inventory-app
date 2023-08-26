@@ -3,6 +3,7 @@ import { ProductContext } from './dashboard';
 import { API_CLIENT } from '../../utils/api';
 import { DELETE_PRODUCT } from '../../utils/constant';
 import Loading from '../../components/Loading';
+import { toast } from 'react-toastify';
 
 const DeleteProduct = ({ product }) => {
   const { setView, dispatch } = useContext(ProductContext);
@@ -31,6 +32,7 @@ const DeleteProduct = ({ product }) => {
           data: res.data.products,
           length: res.data.totalCategory,
         });
+        toast.success('Product Deleted Successfully.', { toastId: 13 });
         closeView();
       })
       .catch((err) => console.log(err));
@@ -48,7 +50,7 @@ const DeleteProduct = ({ product }) => {
         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
           Delete Product
         </h5>
-        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 break-words">
           Are you sure you want to delete {product.name}.
         </p>
         <div className="flex justify-between">

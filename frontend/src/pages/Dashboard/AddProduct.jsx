@@ -4,6 +4,7 @@ import { API_CLIENT } from '../../utils/api';
 import { ADD_PRODUCT, GET_CATEGORY } from '../../utils/constant';
 import { ProductContext } from './Dashboard';
 import Loading from '../../components/Loading';
+import { toast } from 'react-toastify';
 
 const AddProduct = () => {
   const { setView, dispatch } = useContext(ProductContext);
@@ -31,6 +32,7 @@ const AddProduct = () => {
           type: 'added_product',
           payload: res.data,
         });
+        toast.success('Product Created Successfully.', { toastId: 12 });
         setView(null);
       })
       .catch((err) => console.log(err));

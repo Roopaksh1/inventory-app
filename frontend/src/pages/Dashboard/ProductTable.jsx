@@ -98,26 +98,26 @@ const ProductTable = ({ products, query }) => {
   return (
     <div className=" max-w-full sm:self-stretch">
       <div className="overflow-auto w-[80vw]">
-        <table className="shadow border text-center w-full">
+        <table className="shadow border text-center w-full text-sm lg:text-base">
           <thead className="">
             <tr className="border-b-2">
               <th>
-                <div className="w-[25ch]">Name</div>
+                <div className="lg:w-[25ch] w-[15ch]">Name</div>
               </th>
               <th>
-                <div className="w-auto">Action</div>
+                <div className=" whitespace-nowrap">Action</div>
               </th>
               <th>
-                <div className="w-[25ch]">Category</div>
+                <div className="lg:w-[25ch] w-[15ch]">Category</div>
               </th>
               <th>
-                <div className="w-[15ch]">Price</div>
+                <div className="w-[10ch]">Price</div>
               </th>
               <th>
-                <div className="w-[15ch]">Quantity</div>
+                <div className="w-[10ch]">Quantity</div>
               </th>
               <th>
-                <div className="w-[15ch]">Value</div>
+                <div className="w-[10ch]">Value</div>
               </th>
             </tr>
           </thead>
@@ -126,7 +126,7 @@ const ProductTable = ({ products, query }) => {
           </tbody>
         </table>
       </div>
-      <table className="shadow border w-full overflow-auto">
+      <table className="shadow border w-full overflow-auto text-sm lg:text-base">
         <tfoot className="">
           <tr className="font-bold">
             <td className=" text-end">
