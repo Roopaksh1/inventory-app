@@ -19,17 +19,26 @@ export const productReducer = (state, action) => {
         loading: false,
       };
     }
-    case 'deleted': {
+    case 'deleted_product': {
       return {
         ...state,
         data: action.data,
         totalCategory: action.length,
       };
     }
-    case 'updated': {
+    case 'updated_product': {
+      const modifiedData = state.data.map((product) => {
+        if (product._id === action.data._id)
+          return action.data;
+        return product;
+      });
+      const length = action.categoryDeleted
+        ? state.totalCategory - 1
+        : state.totalCategory;
       return {
         ...state,
-        data: action.payload,
+        data: modifiedData,
+        totalCategory: length,
       };
     }
     case 'added_product': {

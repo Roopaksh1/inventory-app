@@ -3,6 +3,7 @@ import { ProductContext } from './Dashboard';
 import { API_CLIENT } from '../../utils/api';
 import { ADD_CATEGORY } from '../../utils/constant';
 import Loading from '../../components/Loading';
+import { toast } from 'react-toastify';
 
 const AddCategory = () => {
   const { setView, dispatch } = useContext(ProductContext);
@@ -20,6 +21,18 @@ const AddCategory = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.name === '') {
+      toast.error('Please enter category name!', { toastId: 9 });
+      return;
+    } else if (formData.description === '') {
+      toast.error('Please enter category description!', { toastId: 10 });
+      return;
+    } else if (formData.description.length > 255) {
+      toast.error('Description can have no more than 255 words!', {
+        toastId: 11,
+      });
+      return;
+    }
     const data = {
       name: formData.name,
       description: formData.description,
@@ -56,7 +69,6 @@ const AddCategory = () => {
             name="name"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Computer Hardware"
-            required
             autoFocus
             ref={name}
             value={formData.name}
@@ -79,7 +91,6 @@ const AddCategory = () => {
             rows="4"
             className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Computer hardware includes the physical parts of a computer."
-            required
             ref={description}
             value={formData.description}
             onInput={handleInput}

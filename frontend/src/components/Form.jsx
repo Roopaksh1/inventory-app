@@ -1,14 +1,27 @@
 import { useContext, useRef, useState } from 'react';
 import { ProductContext } from '../pages/Dashboard/Dashboard';
+import { toast } from 'react-toastify';
 
-const Form = ({ submitForm, options }) => {
-  const [formData, setFormData] = useState({
+const Form = ({
+  submitForm,
+  options,
+  initialData = {
     name: '',
     category: '',
     price: '',
     quantity: '',
     image: '',
     description: '',
+  },
+  mode = '',
+}) => {
+  const [formData, setFormData] = useState({
+    name: initialData.name,
+    category: initialData.category._id,
+    price: initialData.price,
+    quantity: initialData.quantity,
+    image: initialData.image.url,
+    description: initialData.description,
   });
   const form = useRef();
   const name = useRef();
@@ -36,12 +49,45 @@ const Form = ({ submitForm, options }) => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
+    if (formData.name === '') {
+      toast.error('Please enter product name!', { toastId: 2 });
+      return;
+    } else if (formData.category === '') {
+      toast.error('Choose a category!', { toastId: 3 });
+      return;
+    } else if (formData.price === '') {
+      toast.error('Please enter product price!', { toastId: 4 });
+      return;
+    } else if (formData.quantity === '') {
+      toast.error('Please enter quantity!', { toastId: 5 });
+      return;
+    } else if (mode !== 'edit' && !formData.image) {
+      toast.error('Please upload an image!', {
+        toastId: 6,
+      });
+      return;
+    } else if (formData.description === '') {
+      toast.error('Please enter product description!', { toastId: 7 });
+      return;
+    } else if (formData.description.length > 255) {
+      toast.error('Description can have no more than 255 words!', {
+        toastId: 8,
+      });
+      return;
+    }
     const data = new FormData(form.current);
     submitForm(data);
   };
+
+  let imagePreview;
+  try {
+    imagePreview = <img src={URL.createObjectURL(formData.image)} alt=" " />;
+  } catch (err) {
+    imagePreview = <img src={formData.image} alt=" " />;
+  }
   return (
     <div className="fixed top-0 left-0 min-w-[100vw] min-h-[100vh] bg-[#00000080] flex justify-center items-center">
-      <div className="overflow-auto h-[95vh] md:w-[30rem]">
+      <div className="overflow-auto h-[95vh] w-80 md:w-[30rem]">
         <form
           className="p-4 bg-white rounded-lg flex flex-col gap-2 justify-stretch"
           onSubmit={onSubmit}
@@ -66,7 +112,6 @@ const Form = ({ submitForm, options }) => {
               name="name"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="GeForce RTX 4090"
-              required
               autoFocus
               ref={name}
               value={formData.name}
@@ -106,7 +151,6 @@ const Form = ({ submitForm, options }) => {
               min={0}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="&#8377; 158000"
-              required
               ref={price}
               value={formData.price}
               onInput={handleInput}
@@ -126,7 +170,6 @@ const Form = ({ submitForm, options }) => {
               min={0}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="1"
-              required
               ref={quantity}
               value={formData.quantity}
               onInput={handleInput}
@@ -146,11 +189,11 @@ const Form = ({ submitForm, options }) => {
               name="image"
               type="file"
               accept="image/png, image/jpeg, image/jpg"
-              required
               ref={image}
               onInput={handleInput}
             />
           </p>
+          {imagePreview}
           <div>
             <label
               htmlFor="description"
@@ -167,7 +210,6 @@ const Form = ({ submitForm, options }) => {
               rows="4"
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Tell us about the product"
-              required
               ref={description}
               value={formData.description}
               onInput={handleInput}

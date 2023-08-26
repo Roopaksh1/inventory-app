@@ -80,9 +80,84 @@ exports.addProduct = [
   }),
 ];
 
-exports.updateProduct = asyncHandler(async (req, res) => {
-  res.send('NOT IMPLEMENTED');
-});
+exports.updateProduct = [
+  body('name')
+    .trim()
+    .escape()
+    .notEmpty()
+    .withMessage('Please enter product name.'),
+  body('category')
+    .trim()
+    .notEmpty()
+    .withMessage('Please enter product category.'),
+  body('price')
+    .trim()
+    .escape()
+    .isNumeric({ min: 0 })
+    .withMessage('Invalid Price.'),
+  body('quantity')
+    .trim()
+    .escape()
+    .isNumeric({ min: 0 })
+    .withMessage('Invalid Quantity.'),
+  body('description')
+    .trim()
+    .notEmpty()
+    .withMessage('Please enter product description.')
+    .isLength({ max: 255 })
+    .withMessage('Description can have no more than 255 characters.'),
+  asyncHandler(async (req, res) => {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      res.status(400);
+      throw new Error(error.errors[0].msg);
+    }
+    const product = await Item.findById(req.params.id).exec();
+    if (!product) {
+      res.status(400);
+      throw new Error('Product not found.');
+    }
+    const { name, description, category, price, quantity } = req.body;
+
+    // Delete category if it is empty
+    let deleted = false;
+    if (product.category !== category) {
+      const allProducts = await Item.find(
+        {
+          category: product.category,
+        },
+        '_id'
+      ).exec();
+      if (allProducts.length === 1) {
+        await Category.findByIdAndRemove(product.category).exec();
+        deleted = true;
+      }
+    }
+
+    let fileData;
+    if (req.file) {
+      uploadedFile = await cloudinary.uploader.upload(dataUri(req).content, {
+        public_id: product.image.public_id,
+        folder: 'products',
+      });
+      fileData = {
+        public_id: uploadedFile.public_id,
+        url: uploadedFile.secure_url,
+      };
+    }
+    product.name = name;
+    product.description = description;
+    product.category = category;
+    product.price = price;
+    product.quantity = quantity;
+    if (fileData) {
+      product.image = fileData;
+    }
+    const modifiedProduct = await product.save();
+    await Item.populate(modifiedProduct, { path: 'category', select: 'name' });
+    res.json({ modifiedProduct, flag: deleted });
+  }),
+];
 
 exports.deleteProduct = asyncHandler(async (req, res) => {
   const deletedProduct = await Item.findByIdAndRemove(req.params.id).exec();

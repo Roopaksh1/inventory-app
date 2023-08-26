@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import Form from '../../components/Form';
 import { API_CLIENT } from '../../utils/api';
-import { ADD_PRODUCT, GET_CATEGORY } from '../../utils/constant';
+import { GET_CATEGORY, UPDATE_PRODUCT } from '../../utils/constant';
 import { ProductContext } from './Dashboard';
 import Loading from '../../components/Loading';
 
-const AddProduct = () => {
+const UpdateProduct = ({ product }) => {
   const { setView, dispatch } = useContext(ProductContext);
   const [category, setCategory] = useState(null);
   useEffect(() => {
@@ -20,26 +20,32 @@ const AddProduct = () => {
   const onSubmit = (formData) => {
     setView(
       <Loading
-        action="Creating"
+        action="Updating"
         bgColor="bg-[#00000080]"
         textColor="text-white"
       />
     );
-    API_CLIENT.post(ADD_PRODUCT, formData)
+    API_CLIENT.put(UPDATE_PRODUCT + '/' + product._id, formData)
       .then((res) => {
         dispatch({
-          type: 'added_product',
-          payload: res.data,
+          type: 'updated_product',
+          data: res.data.modifiedProduct,
+          categoryDeleted: res.data.flag,
         });
         setView(null);
       })
       .catch((err) => console.log(err));
   };
   return category ? (
-    <Form submitForm={onSubmit} options={options()} />
+    <Form
+      submitForm={onSubmit}
+      options={options()}
+      initialData={product}
+      mode="edit"
+    />
   ) : (
     <Loading bgColor="bg-[#00000080]" textColor="text-white" />
   );
 };
 
-export default AddProduct;
+export default UpdateProduct;

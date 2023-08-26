@@ -3,6 +3,7 @@ import { ProductContext } from './Dashboard';
 import ProductView from './ProductView';
 import DeleteProduct from './DeleteProduct';
 import { capitalize } from '../../utils/capitalize';
+import UpdateProduct from './UpdateProduct';
 
 const Product = ({ products, limit, search }) => {
   const { setView } = useContext(ProductContext);
@@ -18,11 +19,11 @@ const Product = ({ products, limit, search }) => {
     );
     setView(<DeleteProduct product={product} />);
   };
-  const showEditView = (e) => {
+  const showEditForm = (e) => {
     const product = products.find(
       (p) => p._id == e.target.getAttribute('data-id')
     );
-    setView(<ProductView product={product} />);
+    setView(<UpdateProduct product={product} />);
   };
   const getProducts = () => {
     if (products.length === 0) return null;
@@ -54,7 +55,7 @@ const Product = ({ products, limit, search }) => {
                   View
                 </button>
                 <button
-                  onClick={showEditView}
+                  onClick={showEditForm}
                   data-id={p._id}
                   className="mr-2 md:hover:bg-[#efedf2] md:p-1"
                 >
