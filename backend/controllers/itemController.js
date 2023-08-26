@@ -22,8 +22,16 @@ exports.addProduct = [
     .trim()
     .notEmpty()
     .withMessage('Please enter product category.'),
-  body('price').trim().escape().isNumeric().withMessage('Invalid Price.'),
-  body('quantity').trim().escape().isNumeric().withMessage('Invalid Quantity.'),
+  body('price')
+    .trim()
+    .escape()
+    .isNumeric({ min: 0 })
+    .withMessage('Invalid Price.'),
+  body('quantity')
+    .trim()
+    .escape()
+    .isNumeric({ min: 0 })
+    .withMessage('Invalid Quantity.'),
   body('description')
     .trim()
     .notEmpty()
