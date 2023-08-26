@@ -37,13 +37,13 @@ const Category = () => {
     return state.category.map((c) => (
       <div
         key={c._id}
-        className="flex flex-col items-center text-start gap-2 border-2 p-2 lg:hover:shadow-lg hover:shadow-sm"
+        className="flex flex-col items-center text-start gap-2 border-2 p-2 lg:hover:shadow-lg hover:shadow-sm max-w-full"
       >
-        <img src={image} alt=" " />
-        <h5 className="overflow-hidden max-w-full font-bold md:text-xl ">
+        <img className="max-h-[10rem] lg:max-h-[15rem]" src={image} alt=" " />
+        <h5 className="break-words overflow-hidden max-w-full font-bold md:text-xl max-h-16">
           {capitalize(c.name)}
         </h5>
-        <p className="text-sm md:text-base overflow-auto max-h-[6rem] md:max-h-[10rem] max-w-full p-1">
+        <p className="break-words text-sm md:text-base overflow-auto max-h-[6rem] md:max-h-[10rem] max-w-full p-1">
           {c.description}
         </p>
         <button

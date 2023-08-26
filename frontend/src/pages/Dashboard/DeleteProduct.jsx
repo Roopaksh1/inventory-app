@@ -17,7 +17,13 @@ const DeleteProduct = ({ product }) => {
   };
 
   const deleteProduct = () => {
-    setView(<Loading action="Deleting" bgColor="bg-[#00000080]" />);
+    setView(
+      <Loading
+        action="Deleting"
+        bgColor="bg-[#00000080]"
+        textColor="text-white"
+      />
+    );
     API_CLIENT.delete(DELETE_PRODUCT + '/' + product._id)
       .then((res) => {
         dispatch({

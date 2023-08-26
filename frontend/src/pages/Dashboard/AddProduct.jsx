@@ -18,7 +18,13 @@ const AddProduct = () => {
       </option>
     ));
   const onSubmit = (formData) => {
-    setView(<Loading action="Creating" bgColor="bg-[#00000080]" />);
+    setView(
+      <Loading
+        action="Creating"
+        bgColor="bg-[#00000080]"
+        textColor="text-white"
+      />
+    );
     API_CLIENT.post(ADD_PRODUCT, formData)
       .then((res) => {
         dispatch({

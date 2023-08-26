@@ -13,12 +13,14 @@
 th,
 td {
   padding: 1rem;
+  word-break: break-all;
 }
 
 .category,
 .product {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  grid-auto-rows: 1fr;
   gap: 3rem;
 }
 

@@ -59,7 +59,7 @@ const Dashboard = () => {
     <Loading />
   ) : (
     <ProductContext.Provider value={{ setView, dispatch }}>
-      <main className="flex-grow p-4 flex flex-col items-center gap-4 sm:w-[80%] sm:self-center">
+      <main className="flex-grow p-4 flex flex-col items-center gap-4 sm:self-center">
         <div className="text-lg sm:text-base md:text-lg flex flex-col gap-4 sm:flex-row sm:self-stretch">
           <div className="flex gap-2 text-center bg-green-400 rounded-xl p-2 sm:flex-grow sm:basis-0">
             <i className="fa-solid fa-cart-shopping text-2xl"></i>

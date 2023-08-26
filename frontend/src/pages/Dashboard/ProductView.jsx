@@ -18,7 +18,7 @@ const ProductView = ({ product }) => {
       onMouseDown={handleClick}
     >
       <main
-        className="flex flex-col bg-white p-10 gap-2 rounded-xl w-[70vw] h-[90vh] sm:w-[45vw] md:text-lg overflow-y-auto"
+        className="flex flex-col bg-white p-10 gap-2 rounded-xl w-[70vw] h-[90vh] md:h-[95vh] sm:w-[45vw] md:text-lg overflow-y-auto"
         ref={view}
       >
         <p className="text-end text-red-600">
@@ -37,10 +37,10 @@ const ProductView = ({ product }) => {
             {product.quantity != 0 ? 'In Stock' : 'Out Of Stock'}
           </span>
         </p>
-        <p className="font-bold">
+        <p className="font-bold break-words">
           Product Name: <span className=" font-normal">{product.name}</span>
         </p>
-        <p className="font-bold">
+        <p className="font-bold break-words">
           Category:{' '}
           <span className=" font-normal">{product.category.name}</span>
         </p>
@@ -57,8 +57,23 @@ const ProductView = ({ product }) => {
           </span>
         </p>
         <div className="font-bold">
-          Description: <p className=" font-normal">{product.description}</p>
+          Description:{' '}
+          <p className="font-normal break-words">{product.description}</p>
         </div>
+        <code className="font-light text-sm">
+          <p>
+            Created At:{' '}
+            <span className=" font-light text-xs">
+              {new Date(product.createdAt).toLocaleString()}
+            </span>
+          </p>
+          <p>
+            Updated At:{' '}
+            <span className=" font-light text-xs">
+              {new Date(product.updatedAt).toLocaleString()}
+            </span>
+          </p>
+        </code>
       </main>
     </div>
   );
