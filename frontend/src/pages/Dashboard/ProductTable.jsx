@@ -47,7 +47,7 @@ const ProductTable = ({ products, query }) => {
   };
 
   let buttonBack =
-    (display.start === 1 || display.start === 0) ? (
+    display.start === 1 || display.start === 0 ? (
       <button disabled onClick={handleBack}>
         <i className="fa-solid fa-chevron-left mx-6 text-gray-400"></i>
       </button>
@@ -68,7 +68,13 @@ const ProductTable = ({ products, query }) => {
     );
 
   useEffect(() => {
-    if (products.length === 0) return;
+    if (products.length === 0) {
+      setDisplay({
+        start: 0,
+        end: 0,
+      });
+      return;
+    }
     if (products.length <= STEP) {
       setDisplay({
         start: 1,
@@ -91,16 +97,28 @@ const ProductTable = ({ products, query }) => {
 
   return (
     <div className=" max-w-full sm:self-stretch">
-      <div className="overflow-auto">
-        <table className="shadow border text-center">
+      <div className="overflow-auto w-[80vw]">
+        <table className="shadow border text-center w-full">
           <thead className="">
             <tr className="border-b-2">
-              <th>Name</th>
-              <th>Action</th>
-              <th>Category</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Value</th>
+              <th>
+                <div className="w-[25ch]">Name</div>
+              </th>
+              <th>
+                <div className="w-auto">Action</div>
+              </th>
+              <th>
+                <div className="w-[25ch]">Category</div>
+              </th>
+              <th>
+                <div className="w-[15ch]">Price</div>
+              </th>
+              <th>
+                <div className="w-[15ch]">Quantity</div>
+              </th>
+              <th>
+                <div className="w-[15ch]">Value</div>
+              </th>
             </tr>
           </thead>
           <tbody className="">

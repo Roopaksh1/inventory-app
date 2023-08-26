@@ -138,7 +138,6 @@ exports.updateProduct = [
     if (req.file) {
       uploadedFile = await cloudinary.uploader.upload(dataUri(req).content, {
         public_id: product.image.public_id,
-        folder: 'products',
       });
       fileData = {
         public_id: uploadedFile.public_id,
