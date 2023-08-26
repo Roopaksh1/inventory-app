@@ -1,6 +1,6 @@
 import { createContext, useEffect, useReducer, useState } from 'react';
 import SearchBar from '../../components/SearchBar';
-import ProductTable from './productTable';
+import ProductTable from './ProductTable';
 import {
   initialProductState,
   productReducer,

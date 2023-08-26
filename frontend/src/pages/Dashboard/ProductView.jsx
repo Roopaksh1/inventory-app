@@ -1,5 +1,5 @@
 import { useContext, useRef } from 'react';
-import { ProductContext } from './dashboard';
+import { ProductContext } from './Dashboard';
 
 const ProductView = ({ product }) => {
   const { setView } = useContext(ProductContext);

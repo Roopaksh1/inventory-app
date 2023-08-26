@@ -1,5 +1,5 @@
 import { useContext, useRef } from 'react';
-import { ProductContext } from './dashboard';
+import { ProductContext } from './Dashboard';
 import { API_CLIENT } from '../../utils/api';
 import { DELETE_PRODUCT } from '../../utils/constant';
 import Loading from '../../components/Loading';

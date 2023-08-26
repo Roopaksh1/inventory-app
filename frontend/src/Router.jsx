@@ -4,7 +4,7 @@ import Home from './pages/Home/Home';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Contact from './pages/Contact/Contact';
 import Error from './components/Error';
-import Category from './pages/Category/category';
+import Category from './pages/Category/Category';
 
 const Router = () => {
   const router = createBrowserRouter([
