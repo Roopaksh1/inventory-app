@@ -1,6 +1,7 @@
 import { capitalize } from '../../utils/capitalize';
+import PropTypes from 'prop-types';
 
-const Product = ({ product = [], dispatch }) => {
+const Product = ({ product, dispatch }) => {
   const goBack = () => {
     dispatch({
       type: 'back',
@@ -48,6 +49,11 @@ const Product = ({ product = [], dispatch }) => {
       <section className="product">{mapProduct()}</section>
     </main>
   );
+};
+
+Product.propTypes = {
+  product: PropTypes.array.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default Product;

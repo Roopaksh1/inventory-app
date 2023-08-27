@@ -4,6 +4,7 @@ import ProductView from './ProductView';
 import DeleteProduct from './DeleteProduct';
 import { capitalize } from '../../utils/capitalize';
 import UpdateProduct from './UpdateProduct';
+import PropTypes from 'prop-types';
 
 const Product = ({ products, limit, search }) => {
   const { setView } = useContext(ProductContext);
@@ -38,7 +39,9 @@ const Product = ({ products, limit, search }) => {
         flag && (
           <tr key={p._id} className="border-b-2 md:hover:bg-[#f5f5f5]">
             <td>
-              <div className="truncate lg:w-[25ch] w-[15ch]">{capitalize(p.name)}</div>
+              <div className="truncate lg:w-[25ch] w-[15ch]">
+                {capitalize(p.name)}
+              </div>
             </td>
             <td>
               <div className="w-max whitespace-nowrap">
@@ -98,6 +101,12 @@ const Product = ({ products, limit, search }) => {
     return allProducts.slice(limit.start - 1, limit.end);
   };
   return getProducts();
+};
+
+Product.propTypes = {
+  products: PropTypes.array.isRequired,
+  limit: PropTypes.object.isRequired,
+  search: PropTypes.string.isRequired,
 };
 
 export default Product;

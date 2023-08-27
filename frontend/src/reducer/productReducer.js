@@ -28,8 +28,7 @@ export const productReducer = (state, action) => {
     }
     case 'updated_product': {
       const modifiedData = state.data.map((product) => {
-        if (product._id === action.data._id)
-          return action.data;
+        if (product._id === action.data._id) return action.data;
         return product;
       });
       const length = action.categoryDeleted

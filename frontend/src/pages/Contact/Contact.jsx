@@ -28,7 +28,9 @@ const Contact = () => {
           <i className="fa-brands fa-instagram fa-4x hover:scale-125 transition-transform cursor-pointer"></i>
         </a>
       </div>
-      <p className="text-2xl font-bold tracking-widest font-serif sm:text-3xl">InStock</p>
+      <p className="text-2xl font-bold tracking-widest font-serif sm:text-3xl">
+        InStock
+      </p>
     </nav>
   );
 };

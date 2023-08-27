@@ -1,8 +1,6 @@
-const Loading = ({
-  action = 'Loading',
-  bgColor = 'white',
-  textColor = 'black',
-}) => {
+import PropTypes from 'prop-types';
+
+const Loading = ({ action, bgColor, textColor }) => {
   return (
     <div
       className={`fixed top-0 left-0 min-w-[100vw] min-h-[100vh] flex ${bgColor} justify-center items-center`}
@@ -15,6 +13,18 @@ const Loading = ({
       </div>
     </div>
   );
+};
+
+Loading.propTypes = {
+  action: PropTypes.string,
+  bgColor: PropTypes.string,
+  textColor: PropTypes.string,
+};
+
+Loading.defaultProp = {
+  action: 'Loading',
+  bgColor: 'white',
+  textColor: 'black',
 };
 
 export default Loading;

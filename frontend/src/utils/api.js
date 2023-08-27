@@ -12,5 +12,5 @@ export const API_CLIENT = {
   },
   delete(url) {
     return axios.delete(url);
-  }
+  },
 };

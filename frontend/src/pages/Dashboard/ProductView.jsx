@@ -1,5 +1,6 @@
 import { useContext, useRef } from 'react';
 import { ProductContext } from './Dashboard';
+import PropTypes from 'prop-types';
 
 const ProductView = ({ product }) => {
   const { setView } = useContext(ProductContext);
@@ -77,6 +78,10 @@ const ProductView = ({ product }) => {
       </main>
     </div>
   );
+};
+
+ProductView.propTypes = {
+  product: PropTypes.object.isRequired,
 };
 
 export default ProductView;

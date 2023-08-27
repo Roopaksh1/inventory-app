@@ -5,6 +5,7 @@ import { GET_CATEGORY, UPDATE_PRODUCT } from '../../utils/constant';
 import { ProductContext } from './Dashboard';
 import Loading from '../../components/Loading';
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 
 const UpdateProduct = ({ product }) => {
   const { setView, dispatch } = useContext(ProductContext);
@@ -48,6 +49,10 @@ const UpdateProduct = ({ product }) => {
   ) : (
     <Loading bgColor="bg-[#00000080]" textColor="text-white" />
   );
+};
+
+UpdateProduct.propTypes = {
+  product: PropTypes.object.isRequired,
 };
 
 export default UpdateProduct;

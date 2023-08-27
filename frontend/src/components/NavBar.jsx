@@ -54,7 +54,7 @@ const NavBar = () => {
         className="flex font-semibold font-sans justify-between navbar translate-x-full transition-transform px-4 border-b-4 border-gray-300 sm:hidden"
         ref={navdom}
       >
-        <div className='flex flex-col gap-2'>
+        <div className="flex flex-col gap-2">
           <NavLink to={'/'} onClick={toggle} tabIndex={-1}>
             Home
           </NavLink>
@@ -65,7 +65,7 @@ const NavBar = () => {
             Contact
           </NavLink>
         </div>
-        <div className='flex flex-col gap-2'>
+        <div className="flex flex-col gap-2">
           <NavLink to={'/category'} onClick={toggle} tabIndex={-1}>
             Categories
           </NavLink>

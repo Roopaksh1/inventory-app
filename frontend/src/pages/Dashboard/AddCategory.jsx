@@ -38,7 +38,7 @@ const AddCategory = () => {
       description: formData.description,
     };
     setView(<Loading action="Adding" bgColor="bg-[#00000080]" />);
-    API_CLIENT.post(ADD_CATEGORY, data).then((res) => {
+    API_CLIENT.post(ADD_CATEGORY, data).then(() => {
       dispatch({
         type: 'added_category',
       });

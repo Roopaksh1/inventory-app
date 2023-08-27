@@ -1,6 +1,7 @@
 import { useRef } from 'react';
+import PropTypes from 'prop-types';
 
-const SearchBar = ({ search = '', setSearch }) => {
+const SearchBar = ({ search, setSearch }) => {
   const input = useRef();
   const handleSearch = () => {
     setSearch(input.current.value);
@@ -20,6 +21,11 @@ const SearchBar = ({ search = '', setSearch }) => {
       />
     </div>
   );
+};
+
+SearchBar.propTypes = {
+  search: PropTypes.string.isRequired,
+  setSearch: PropTypes.func.isRequired,
 };
 
 export default SearchBar;

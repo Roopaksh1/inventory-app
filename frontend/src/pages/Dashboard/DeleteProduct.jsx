@@ -4,6 +4,7 @@ import { API_CLIENT } from '../../utils/api';
 import { DELETE_PRODUCT } from '../../utils/constant';
 import Loading from '../../components/Loading';
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 
 const DeleteProduct = ({ product }) => {
   const { setView, dispatch } = useContext(ProductContext);
@@ -70,6 +71,10 @@ const DeleteProduct = ({ product }) => {
       </div>
     </div>
   );
+};
+
+DeleteProduct.propTypes = {
+  product: PropTypes.object.isRequired,
 };
 
 export default DeleteProduct;

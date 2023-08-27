@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Product from './Product';
+import PropTypes from 'prop-types';
 
 const ProductTable = ({ products, query }) => {
   const STEP = 5;
@@ -138,6 +139,11 @@ const ProductTable = ({ products, query }) => {
       </table>
     </div>
   );
+};
+
+ProductTable.propTypes = {
+  products: PropTypes.array.isRequired,
+  query: PropTypes.string.isRequired,
 };
 
 export default ProductTable;

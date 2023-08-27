@@ -1,20 +1,9 @@
 import { useContext, useRef, useState } from 'react';
 import { ProductContext } from '../pages/Dashboard/Dashboard';
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 
-const Form = ({
-  submitForm,
-  options,
-  initialData = {
-    name: '',
-    category: '',
-    price: '',
-    quantity: '',
-    image: '',
-    description: '',
-  },
-  mode = '',
-}) => {
+const Form = ({ submitForm, options, initialData, mode }) => {
   const [formData, setFormData] = useState({
     name: initialData.name,
     category: initialData.category._id,
@@ -228,6 +217,25 @@ const Form = ({
       </div>
     </div>
   );
+};
+
+Form.propTypes = {
+  submitForm: PropTypes.func.isRequired,
+  options: PropTypes.array.isRequired,
+  initialData: PropTypes.object,
+  mode: PropTypes.string,
+};
+
+Form.defaultProp = {
+  initialData: {
+    name: '',
+    category: '',
+    price: '',
+    quantity: '',
+    image: '',
+    description: '',
+  },
+  mode: '',
 };
 
 export default Form;
