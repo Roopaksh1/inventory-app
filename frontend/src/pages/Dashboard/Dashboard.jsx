@@ -13,6 +13,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddCategory from './AddCategory';
 import Button from '../../components/Button';
+import EmptyBox from '../../components/EmptyBox';
 
 export const ProductContext = createContext({
   setView: () => {},
@@ -96,7 +97,14 @@ const Dashboard = () => {
           </div>
         </div>
         <SearchBar search={productName} setSearch={setProductName} />
-        <ProductTable products={state.data} query={productName} />
+        {state.data.length ? (
+          <ProductTable products={state.data} query={productName} />
+        ) : (
+          <EmptyBox
+            text={'No Products Found'}
+            style={'w-[80vw] text-3xl font-sans text-center my-10'}
+          />
+        )}
         <div>
           <Button
             action={() => {

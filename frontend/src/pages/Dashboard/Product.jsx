@@ -27,7 +27,6 @@ const Product = ({ products, limit, search }) => {
     setView(<UpdateProduct product={product} />);
   };
   const getProducts = () => {
-    if (products.length === 0) return null;
     const allProducts = products.map((p) => {
       let flag = true;
       if (search.trimStart() != '') {

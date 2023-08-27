@@ -10,6 +10,7 @@ import Product from './Product';
 import { capitalize } from '../../utils/capitalize';
 import image from '../../assets/images/category-tag.png';
 import Button from '../../components/Button';
+import EmptyBox from '../../components/EmptyBox';
 
 const Category = () => {
   const [state, dispatch] = useReducer(categoryReducer, initialCategoryState);
@@ -47,7 +48,12 @@ const Category = () => {
         <p className="break-words text-sm md:text-base overflow-auto max-h-[6rem] md:max-h-[10rem] max-w-full p-1">
           {c.description}
         </p>
-        <Button color={'green'} style={'mt-auto'} action={handleSelect} id={c._id}>
+        <Button
+          color={'green'}
+          style={'mt-auto'}
+          action={handleSelect}
+          id={c._id}
+        >
           Check
         </Button>
       </div>
@@ -57,9 +63,21 @@ const Category = () => {
   return state.loading || !state.category ? (
     <Loading />
   ) : !state.product ? (
-    <main className="category p-6 overflow-auto">{mapCategory()}</main>
-  ) : (
+    state.category.length ? (
+      <main className="category p-6 overflow-auto">{mapCategory()}</main>
+    ) : (
+      <EmptyBox
+        text={'No Category Found'}
+        style={'w-full text-3xl font-sans text-center my-10'}
+      />
+    )
+  ) : state.product.length ? (
     <Product product={state.product} dispatch={dispatch} />
+  ) : (
+    <EmptyBox
+      text={'No Products Found'}
+      style={'w-full text-3xl font-sans text-center my-10'}
+    />
   );
 };
 
