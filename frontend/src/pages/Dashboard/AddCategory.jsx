@@ -37,11 +37,19 @@ const AddCategory = () => {
       name: formData.name,
       description: formData.description,
     };
-    setView(<Loading action="Adding" bgColor="bg-[#00000080]" />);
+    setView(
+      <Loading
+        action="Creating"
+        bgColor="bg-[#00000080]"
+        textColor="text-white"
+        full={true}
+      />
+    );
     API_CLIENT.post(ADD_CATEGORY, data).then(() => {
       dispatch({
         type: 'added_category',
       });
+      toast.success('Category Created Successfully.', { toastId: 12 });
       setView(null);
     });
   };

@@ -25,6 +25,7 @@ const UpdateProduct = ({ product }) => {
         action="Updating"
         bgColor="bg-[#00000080]"
         textColor="text-white"
+        full={true}
       />
     );
     API_CLIENT.put(UPDATE_PRODUCT + '/' + product._id, formData)

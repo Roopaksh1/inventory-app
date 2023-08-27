@@ -24,6 +24,7 @@ const AddProduct = () => {
         action="Creating"
         bgColor="bg-[#00000080]"
         textColor="text-white"
+        full={true}
       />
     );
     API_CLIENT.post(ADD_PRODUCT, formData)

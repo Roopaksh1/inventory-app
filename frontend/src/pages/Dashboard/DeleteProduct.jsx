@@ -24,6 +24,7 @@ const DeleteProduct = ({ product }) => {
         action="Deleting"
         bgColor="bg-[#00000080]"
         textColor="text-white"
+        full={true}
       />
     );
     API_CLIENT.delete(DELETE_PRODUCT + '/' + product._id)

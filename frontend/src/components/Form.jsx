@@ -226,7 +226,7 @@ Form.propTypes = {
   mode: PropTypes.string,
 };
 
-Form.defaultProp = {
+Form.defaultProps = {
   initialData: {
     name: '',
     category: '',
