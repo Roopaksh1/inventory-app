@@ -9,7 +9,6 @@ import Loading from '../../components/Loading';
 import Product from './Product';
 import { capitalize } from '../../utils/capitalize';
 import image from '../../assets/images/category-tag.png';
-import Button from '../../components/Button';
 import EmptyBox from '../../components/EmptyBox';
 
 const Category = () => {
@@ -48,14 +47,13 @@ const Category = () => {
         <p className="break-words text-sm md:text-base overflow-auto max-h-[6rem] md:max-h-[10rem] max-w-full p-1">
           {c.description}
         </p>
-        <Button
-          color={'green'}
-          style={'mt-auto'}
-          action={handleSelect}
-          id={c._id}
+        <button
+          className="mt-auto inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300"
+          onClick={handleSelect}
+          data-id={c._id}
         >
           Check
-        </Button>
+        </button>
       </div>
     ));
   };

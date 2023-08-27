@@ -41,7 +41,7 @@ const AddProduct = () => {
   return category ? (
     <Form submitForm={onSubmit} options={options()} />
   ) : (
-    <Loading bgColor="bg-[#00000080]" textColor="text-white" />
+    <Loading bgColor="bg-[#00000080]" textColor="text-white" full={true}/>
   );
 };
 

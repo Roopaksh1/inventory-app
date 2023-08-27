@@ -48,7 +48,7 @@ const UpdateProduct = ({ product }) => {
       mode="edit"
     />
   ) : (
-    <Loading bgColor="bg-[#00000080]" textColor="text-white" />
+    <Loading bgColor="bg-[#00000080]" textColor="text-white" full={true}/>
   );
 };
 

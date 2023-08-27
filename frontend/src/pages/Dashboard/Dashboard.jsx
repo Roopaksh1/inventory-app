@@ -12,7 +12,6 @@ import AddProduct from './AddProduct';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddCategory from './AddCategory';
-import Button from '../../components/Button';
 import EmptyBox from '../../components/EmptyBox';
 
 export const ProductContext = createContext({
@@ -106,26 +105,26 @@ const Dashboard = () => {
           />
         )}
         <div>
-          <Button
-            action={() => {
+          <button
+            className="mr-5 md:text-xl inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            onClick={() => {
               setView(<AddCategory />);
             }}
-            style="md:text-xl mr-5 w-auto"
           >
             Add Category
-          </Button>
-          <Button
-            action={() => {
+          </button>
+          <button
+            className="md:text-xl inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            onClick={() => {
               if (state.totalCategory !== 0) {
                 setView(<AddProduct />);
               } else {
                 toast.warning('Add a category first!', { toastId: 1 });
               }
             }}
-            style="md:text-xl w-auto"
           >
             Add Product
-          </Button>
+          </button>
         </div>
       </main>
       {view}

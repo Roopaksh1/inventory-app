@@ -4,7 +4,6 @@ import { API_CLIENT } from '../../utils/api';
 import { ADD_CATEGORY } from '../../utils/constant';
 import Loading from '../../components/Loading';
 import { toast } from 'react-toastify';
-import Button from '../../components/Button';
 
 const AddCategory = () => {
   const { setView, dispatch } = useContext(ProductContext);
@@ -61,13 +60,9 @@ const AddCategory = () => {
         onSubmit={handleSubmit}
       >
         <p className="text-end text-red-600">
-          <Button
-            color={'white'}
-            action={() => setView(null)}
-            style={'text-end !p-0'}
-          >
-            <i className="fa-solid fa-xmark text-red-600"></i>
-          </Button>
+          <button type="button" onClick={() => setView(null)}>
+            <i className="fa-solid fa-xmark"></i>
+          </button>
         </p>
         <div className="mb-6">
           <label
@@ -112,7 +107,12 @@ const AddCategory = () => {
             {formData.description.length}
           </div>
         </div>
-        <Button>Submit</Button>
+        <button
+          type="submit"
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Submit
+        </button>
       </form>
     </div>
   );
