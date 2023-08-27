@@ -1,3 +1,4 @@
+import Button from '../../components/Button';
 import { capitalize } from '../../utils/capitalize';
 import PropTypes from 'prop-types';
 
@@ -40,12 +41,9 @@ const Product = ({ product, dispatch }) => {
   };
   return (
     <main className="p-4 overflow-auto">
-      <button
-        className="mb-4 md:text-xl inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-gray-700 rounded-lg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300"
-        onClick={goBack}
-      >
+      <Button action={goBack} style={'mb-4 md:text-xl w-auto'}>
         Back
-      </button>
+      </Button>
       <section className="product">{mapProduct()}</section>
     </main>
   );

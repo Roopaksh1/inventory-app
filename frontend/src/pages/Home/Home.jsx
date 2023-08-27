@@ -1,6 +1,7 @@
 import image from '../../assets/images/Inventory.png';
 import { NavLink } from 'react-router-dom';
 import Footer from './footer';
+import Button from '../../components/Button';
 
 const Home = () => {
   return (
@@ -13,16 +14,19 @@ const Home = () => {
           <p className="mb-12 font-semibold sm:text-base md:text-xl">
             Inventory Management Made Easy
           </p>
-          <button className="hidden md:block text-xl border border-black rounded-2xl p-2 bg-green-300 md:text-2xl md:hover:scale-110 md:hover:bg-green-400 transition-all">
+          <Button
+            color="green"
+            style={'hidden md:block text-xl hover:scale-110 transition-all'}
+          >
             <NavLink to={'/dashboard'}>Get Started</NavLink>
-          </button>
+          </Button>
         </div>
         <div className="flex justify-center w-80 md:w-[32rem]">
           <img src={image} alt=" " className="" />
         </div>
-        <button className="md:hidden mt-8 sm:mt-12 text-xl border border-black rounded-2xl p-2 bg-green-300">
+        <Button color="green" style="md:hidden mt-8 sm:mt-12 text-xl w-auto">
           <NavLink to={'/dashboard'}>Get Started</NavLink>
-        </button>
+        </Button>
       </main>
       <Footer />
     </>

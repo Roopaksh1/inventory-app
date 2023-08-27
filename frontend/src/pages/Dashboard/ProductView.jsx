@@ -1,6 +1,7 @@
 import { useContext, useRef } from 'react';
 import { ProductContext } from './Dashboard';
 import PropTypes from 'prop-types';
+import Button from '../../components/Button';
 
 const ProductView = ({ product }) => {
   const { setView } = useContext(ProductContext);
@@ -23,9 +24,9 @@ const ProductView = ({ product }) => {
         ref={view}
       >
         <p className="text-end text-red-600">
-          <button onClick={closeView}>
-            <i className="fa-solid fa-xmark"></i>
-          </button>
+          <Button action={closeView} color={'white'} style={'w-auto !p-0'}>
+            <i className="fa-solid fa-xmark text-red-600"></i>
+          </Button>
         </p>
         <img
           className="w-[20rem] self-center mb-5"

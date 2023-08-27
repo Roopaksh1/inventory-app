@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Button from './Button';
 
 const Error = () => {
   return (
@@ -8,11 +9,14 @@ const Error = () => {
         <span className="text-4xl">|</span>
         <h1>Page Not Found</h1>
       </div>
-      <button className="cursor-pointer lg:hover:scale-110">
+      <Button
+        color={'white'}
+        style={'lg:hover:scale-110 text-black !p-0 w-auto'}
+      >
         <Link className="text-2xl" to={'/'}>
           <i className="fa-solid fa-arrow-left text-xl align-baseline"></i> Back
         </Link>
-      </button>
+      </Button>
     </div>
   );
 };
