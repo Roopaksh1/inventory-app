@@ -2,6 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const config = require('./utils/config');
 const cors = require('cors');
+const passport = require('passport');
+
+const initializePassport = require('./utils/passportConfig');
+initializePassport(passport);
 
 const app = express();
 app.use(
@@ -11,6 +15,7 @@ app.use(
 );
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(passport.initialize());
 
 mongoose.connect(config.MONGODB_URI).catch((err) => console.log(err));
 

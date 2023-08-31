@@ -5,6 +5,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const CLOUD_NAME = process.env.CLOUD_NAME;
 const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
 const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET;
+const JWT_SECRET = process.env.SECRET;
 
 module.exports = {
   PORT,
@@ -12,4 +13,5 @@ module.exports = {
   CLOUD_NAME,
   CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET,
+  JWT_SECRET,
 };
