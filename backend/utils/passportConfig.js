@@ -1,6 +1,5 @@
 const User = require('../models/user');
 const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
 const asyncHandler = require('express-async-handler');
 const { JWT_SECRET } = require('./config');
 
@@ -14,8 +13,16 @@ const initialize = (passport) => {
     }
   });
 
+  const cookieExtractor = (req) => {
+    let token = null;
+    if (req && req.cookies) {
+      token = req.cookies['jwt'];
+    }
+    return token;
+  };
+
   const option = {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken,
+    jwtFromRequest: cookieExtractor,
     secretOrKey: JWT_SECRET,
   };
 
