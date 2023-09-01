@@ -61,3 +61,8 @@ exports.getLogOut = (req, res) => {
     res.clearCookie('jwt').json('You have logged out.');
   }
 };
+
+// auth status
+exports.getLoggedIn = (req, res) => {
+  return req.isAuthenticated();
+};
