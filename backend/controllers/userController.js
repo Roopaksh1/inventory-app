@@ -42,7 +42,7 @@ exports.postSignUp = [
 exports.postLogIn = asyncHandler(async (req, res) => {
   const name = req.body.name;
   const user = await User.findOne({ name: name.toLowerCase() });
-  if (user.length === 0) {
+  if (!user) {
     res.status(401);
     throw new Error('Invalid Username.');
   }
@@ -64,5 +64,5 @@ exports.getLogOut = (req, res) => {
 
 // auth status
 exports.getLoggedIn = (req, res) => {
-  return req.isAuthenticated();
+  res.json(req.isAuthenticated());
 };

@@ -1,9 +1,14 @@
 import image from '../../assets/images/Inventory.png';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Navigate } from 'react-router-dom';
 import Footer from './footer';
+import { useContext } from 'react';
+import { AuthContext } from '../../App';
 
 const Home = () => {
-  return (
+  const { auth } = useContext(AuthContext);
+  return !auth ? (
+    <Navigate to={'/login'} />
+  ) : (
     <>
       <main className="p-4 flex flex-col justify-center items-center md:flex-row md:justify-center md:gap-20 flex-grow">
         <div className="flex flex-col items-center justify-center text-center">

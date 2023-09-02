@@ -9,7 +9,7 @@ import { GET_PRODUCT } from '../../utils/constant';
 import { API_CLIENT } from '../../utils/api';
 import Loading from '../../components/Loading';
 import AddProduct from './AddProduct';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddCategory from './AddCategory';
 import EmptyBox from '../../components/EmptyBox';
@@ -128,11 +128,6 @@ const Dashboard = () => {
         </div>
       </main>
       {view}
-      <ToastContainer
-        position="top-center"
-        autoClose={1500}
-        pauseOnFocusLoss={false}
-      />
     </ProductContext.Provider>
   );
 };
