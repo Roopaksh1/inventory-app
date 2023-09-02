@@ -5,8 +5,10 @@ import { DELETE_PRODUCT } from '../../utils/constant';
 import Loading from '../../components/Loading';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
+import { AuthContext } from '../../App';
 
 const DeleteProduct = ({ product }) => {
+  const { setAuth } = useContext(AuthContext);
   const { setView, dispatch } = useContext(ProductContext);
   const view = useRef();
   const handleClick = (e) => {
@@ -37,7 +39,13 @@ const DeleteProduct = ({ product }) => {
         toast.success('Product Deleted Successfully.', { toastId: 13 });
         closeView();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err?.response?.status == '401') {
+          setAuth(false);
+        } else if (err.request) {
+          toast.error('Server Error', { toastId: 123 });
+        }
+      });
   };
 
   return (

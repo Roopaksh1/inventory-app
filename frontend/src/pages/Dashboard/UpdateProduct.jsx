@@ -6,12 +6,22 @@ import { ProductContext } from './Dashboard';
 import Loading from '../../components/Loading';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
+import { AuthContext } from '../../App';
 
 const UpdateProduct = ({ product }) => {
+  const { setAuth } = useContext(AuthContext);
   const { setView, dispatch } = useContext(ProductContext);
   const [category, setCategory] = useState(null);
   useEffect(() => {
-    API_CLIENT.get(GET_CATEGORY).then((res) => setCategory(res.data));
+    API_CLIENT.get(GET_CATEGORY)
+      .then((res) => setCategory(res.data))
+      .catch((err) => {
+        if (err?.response?.status == '401') {
+          setAuth(false);
+        } else if (err.request) {
+          toast.error('Server Error', { toastId: 123 });
+        }
+      });
   }, []);
   const options = () =>
     category.map((c) => (
@@ -38,7 +48,13 @@ const UpdateProduct = ({ product }) => {
         toast.success('Product Updated Successfully.', { toastId: 14 });
         setView(null);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err?.response?.status == '401') {
+          setAuth(false);
+        } else if (err.request) {
+          toast.error('Server Error', { toastId: 123 });
+        }
+      });
   };
   return category ? (
     <Form
@@ -48,7 +64,7 @@ const UpdateProduct = ({ product }) => {
       mode="edit"
     />
   ) : (
-    <Loading bgColor="bg-[#00000080]" textColor="text-white" full={true}/>
+    <Loading bgColor="bg-[#00000080]" textColor="text-white" full={true} />
   );
 };
 

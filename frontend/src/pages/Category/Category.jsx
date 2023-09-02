@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import { useContext, useEffect, useReducer } from 'react';
 import { API_CLIENT } from '../../utils/api';
 import { GET_CATEGORY } from '../../utils/constant';
 import {
@@ -10,14 +10,24 @@ import Product from './Product';
 import { capitalize } from '../../utils/capitalize';
 import image from '../../assets/images/category-tag.png';
 import EmptyBox from '../../components/EmptyBox';
+import { AuthContext } from '../../App';
+import { Navigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Category = () => {
+  const { auth, setAuth } = useContext(AuthContext);
   const [state, dispatch] = useReducer(categoryReducer, initialCategoryState);
   useEffect(() => {
     const loadCategory = () => {
       API_CLIENT.get(GET_CATEGORY)
         .then((res) => dispatch({ type: 'data_fetched', payload: res.data }))
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          if (err?.response?.status == '401') {
+            setAuth(false);
+          } else if (err.request) {
+            toast.error('Server Error', { toastId: 123 });
+          }
+        })
         .finally(dispatch({ type: 'loaded' }));
     };
     loadCategory();
@@ -31,7 +41,13 @@ const Category = () => {
           payload: res.data,
         })
       )
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err?.response?.status == '401') {
+          setAuth(false);
+        } else if (err.request) {
+          toast.error('Server Error', { toastId: 123 });
+        }
+      });
   };
 
   const mapCategory = () => {
@@ -58,7 +74,9 @@ const Category = () => {
     ));
   };
 
-  return state.loading || !state.category ? (
+  return !auth ? (
+    <Navigate to={'/login'} />
+  ) : state.loading || !state.category ? (
     <Loading />
   ) : !state.product ? (
     state.category.length ? (

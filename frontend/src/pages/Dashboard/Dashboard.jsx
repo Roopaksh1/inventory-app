@@ -1,4 +1,10 @@
-import { createContext, useEffect, useReducer, useState } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from 'react';
 import SearchBar from '../../components/SearchBar';
 import ProductTable from './ProductTable';
 import {
@@ -13,6 +19,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddCategory from './AddCategory';
 import EmptyBox from '../../components/EmptyBox';
+import { AuthContext } from '../../App';
+import { Navigate } from 'react-router-dom';
 
 export const ProductContext = createContext({
   setView: () => {},
@@ -20,6 +28,7 @@ export const ProductContext = createContext({
 });
 
 const Dashboard = () => {
+  const { auth, setAuth } = useContext(AuthContext);
   const [productName, setProductName] = useState('');
   const [view, setView] = useState(null);
   const [state, dispatch] = useReducer(productReducer, initialProductState);
@@ -34,7 +43,13 @@ const Dashboard = () => {
             length: res.data.totalCategory,
           })
         )
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          if (err?.response?.status == '401') {
+            setAuth(false);
+          } else if (err.request) {
+            toast.error('Server Error', { toastId: 123 });
+          }
+        })
         .finally(dispatch({ type: 'loaded' }));
     };
     loadProducts();
@@ -56,7 +71,9 @@ const Dashboard = () => {
     return sum;
   };
 
-  return state.loading || !state.data ? (
+  return !auth ? (
+    <Navigate to={'/login'} />
+  ) : state.loading || !state.data ? (
     <Loading />
   ) : (
     <ProductContext.Provider value={{ setView, dispatch }}>

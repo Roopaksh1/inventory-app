@@ -4,9 +4,11 @@ import { API_CLIENT } from '../../utils/api';
 import { ADD_CATEGORY } from '../../utils/constant';
 import Loading from '../../components/Loading';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../../App';
 
 const AddCategory = () => {
   const { setView, dispatch } = useContext(ProductContext);
+  const { setAuth } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -45,13 +47,21 @@ const AddCategory = () => {
         full={true}
       />
     );
-    API_CLIENT.post(ADD_CATEGORY, data).then(() => {
-      dispatch({
-        type: 'added_category',
+    API_CLIENT.post(ADD_CATEGORY, data)
+      .then(() => {
+        dispatch({
+          type: 'added_category',
+        });
+        toast.success('Category Created Successfully.', { toastId: 12 });
+        setView(null);
+      })
+      .catch((err) => {
+        if (err?.response?.status == '401') {
+          setAuth(false);
+        } else if (err.request) {
+          toast.error('Server Error', { toastId: 123 });
+        }
       });
-      toast.success('Category Created Successfully.', { toastId: 12 });
-      setView(null);
-    });
   };
   return (
     <div className="fixed top-0 left-0 min-w-[100vw] min-h-[100vh] bg-[#00000080] flex justify-center items-center">

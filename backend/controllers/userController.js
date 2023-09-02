@@ -25,6 +25,7 @@ exports.postSignUp = [
     const name = req.body.name;
     // Check for existing user
     if ((await User.find({ name: name.toLowerCase() })).length === 1) {
+      res.status(401);
       throw new Error('A user with that username already exists');
     }
 

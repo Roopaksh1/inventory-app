@@ -5,12 +5,22 @@ import { ADD_PRODUCT, GET_CATEGORY } from '../../utils/constant';
 import { ProductContext } from './Dashboard';
 import Loading from '../../components/Loading';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../../App';
 
 const AddProduct = () => {
+  const { setAuth } = useContext(AuthContext);
   const { setView, dispatch } = useContext(ProductContext);
   const [category, setCategory] = useState(null);
   useEffect(() => {
-    API_CLIENT.get(GET_CATEGORY).then((res) => setCategory(res.data));
+    API_CLIENT.get(GET_CATEGORY)
+      .then((res) => setCategory(res.data))
+      .catch((err) => {
+        if (err?.response?.status == '401') {
+          setAuth(false);
+        } else if (err.request) {
+          toast.error('Server Error', { toastId: 123 });
+        }
+      });
   }, []);
   const options = () =>
     category.map((c) => (
@@ -36,12 +46,18 @@ const AddProduct = () => {
         toast.success('Product Created Successfully.', { toastId: 12 });
         setView(null);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err?.response?.status == '401') {
+          setAuth(false);
+        } else if (err.request) {
+          toast.error('Server Error', { toastId: 123 });
+        }
+      });
   };
   return category ? (
     <Form submitForm={onSubmit} options={options()} />
   ) : (
-    <Loading bgColor="bg-[#00000080]" textColor="text-white" full={true}/>
+    <Loading bgColor="bg-[#00000080]" textColor="text-white" full={true} />
   );
 };
 
