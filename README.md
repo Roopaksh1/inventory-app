@@ -17,14 +17,20 @@
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
 
 ## Features
 
 ### Product And Category Management
 
-Perform actions like add, edit and delete on the product from the dashboard. If there is no product inside the category then the category will be removed. All form data gets validated with the express-validator library. Images are handled with cloudinary.
+Perform actions like add, edit and delete the product from the dashboard. If there is no product inside the category then the category will be removed. All form data gets validated with the express-validator library. Images are handled with cloudinary.
+
+### User Authentication
+
+Authentication is done using jsonWebToken, passportjs and bcryptjs packages. Password is hashed using bcryptjs before saving in database. All products are linked with the user so that each user only has access to their products. 
 
 ## Installation
+
 To get a local copy up and running follow these simple example steps.
 
 1. Clone the Repo
@@ -42,6 +48,7 @@ npm install
 cd backend
 npm install
 ```
+
 3. To run this project, you will need to add the following environment variables to your .env file
 
 ```
@@ -69,6 +76,7 @@ node index.js
 cd frontend
 npm run dev
 ```
+
 Open your browser and navigate to [http://localhost:5173/](http://localhost:5173/)
 
 ## Screenshots
