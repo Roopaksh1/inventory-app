@@ -9,9 +9,10 @@ exports.postSignUp = [
     .trim()
     .escape()
     .notEmpty()
-    .withMessage('Username Required')
+    .withMessage('Please add an username.')
     .custom((value) => !/\s/.test(value))
     .withMessage('No spaces are allowed in the username'),
+  body('email').trim().isEmail().withMessage('Please add an email'),
   body('password')
     .trim()
     .notEmpty()
@@ -36,9 +37,11 @@ exports.postSignUp = [
     }
 
     const password = await bcrypt.hash(req.body.password, 10);
+    const email = req.body.email;
     const user = await User.create({
       name,
       password,
+      email,
     });
     const token = generateToken(user);
     res.cookie('jwt', token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 }); // 1 day

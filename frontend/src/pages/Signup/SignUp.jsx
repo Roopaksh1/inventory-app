@@ -9,16 +9,21 @@ import { toast } from 'react-toastify';
 const SignUp = () => {
   const { user, setUser } = useContext(AuthContext);
   const name = useRef();
+  const email = useRef();
   const password = useRef();
   const confirmPassword = useRef();
   const handleSignup = (e) => {
     e.preventDefault();
     if (name.current.value == '') {
-      toast.error('Username required.', { toastId: 432 });
+      toast.error('Please add an username.', { toastId: 432 });
       return;
     }
     if (name.current.value.match(/\s/)) {
       toast.error('No spaces are allowed in the username', { toastId: 423 });
+      return;
+    }
+    if (email.current.value == '') {
+      toast.error('Please add an email.', { toastId: 42 });
       return;
     }
     if (
@@ -37,6 +42,7 @@ const SignUp = () => {
     API_CLIENT.post(POST_SIGN_UP, {
       name: name.current.value,
       password: password.current.value,
+      email: email.current.value,
     })
       .then((res) => {
         toast.success('You have signed up.');
@@ -74,6 +80,23 @@ const SignUp = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="username"
                   ref={name}
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="name@mail.com"
+                  ref={email}
                   required
                 />
               </div>
