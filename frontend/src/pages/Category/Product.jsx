@@ -14,11 +14,7 @@ const Product = ({ product, dispatch }) => {
         key={p._id}
         className="flex flex-col items-center text-start gap-2 border-2 p-4 lg:hover:shadow-lg max-w-full"
       >
-        <img
-          src={p.image.url}
-          alt=" "
-          className="max-h-[10rem] lg:max-h-[15rem]"
-        />
+        <img src={p.image.url} alt=" " className="h-[10rem] w-auto" />
         <h5 className="break-words font-bold md:text-xl max-w-full max-h-16 overflow-hidden">
           {capitalize(p.name)}
         </h5>
