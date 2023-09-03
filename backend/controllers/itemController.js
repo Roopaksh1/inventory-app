@@ -7,8 +7,13 @@ const cloudinary = require('../utils/cloudinaryConfig');
 const path = require('path');
 
 exports.getProducts = asyncHandler(async (req, res) => {
-  const totalCategory = await Category.find({}, '_id').exec();
-  const allProducts = await Item.find({}).populate('category', 'name').exec();
+  const totalCategory = await Category.find(
+    { user: req.user._id },
+    '_id'
+  ).exec();
+  const allProducts = await Item.find({ user: req.user._id })
+    .populate('category', 'name')
+    .exec();
   res.json({ products: allProducts, totalCategory: totalCategory.length });
 });
 
@@ -68,6 +73,7 @@ exports.addProduct = [
       url: uploadedFile.secure_url,
     };
     const product = await Item.create({
+      user: req.user._id,
       name,
       description,
       category,
@@ -167,7 +173,14 @@ exports.deleteProduct = asyncHandler(async (req, res) => {
   if (products.length === 0) {
     await Category.findByIdAndRemove(deletedProduct.category).exec();
   }
-  const totalCategory = await Category.find({}, '_id').exec();
-  const allProducts = await Item.find({}).populate('category').exec();
+  const totalCategory = await Category.find(
+    { user: req.user._id },
+    '_id'
+  ).exec();
+  const allProducts = await Item.find({
+    user: req.user._id,
+  })
+    .populate('category')
+    .exec();
   res.json({ products: allProducts, totalCategory: totalCategory.length });
 });

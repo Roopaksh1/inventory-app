@@ -9,8 +9,7 @@ const initialize = (passport) => {
     if (!user) {
       done(null, false);
     } else {
-      req.username = jwt_payload.name;
-      done(null, true);
+      done(null, user);
     }
   });
 

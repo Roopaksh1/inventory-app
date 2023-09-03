@@ -71,5 +71,5 @@ exports.getLogOut = (req, res) => {
 
 // auth status
 exports.getLoggedIn = (req, res) => {
-  res.json({ auth: req.isAuthenticated(), name: req.username });
+  res.json({ auth: req.isAuthenticated(), name: req.user.name });
 };

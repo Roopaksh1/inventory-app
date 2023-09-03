@@ -4,7 +4,9 @@ const Category = require('../models/category');
 const Item = require('../models/item');
 
 exports.getCategory = asyncHandler(async (req, res) => {
-  const allCategory = await Category.find({}).exec();
+  const allCategory = await Category.find({
+    user: req.user._id,
+  }).exec();
   res.json(allCategory);
 });
 
@@ -33,6 +35,7 @@ exports.addCategory = [
     }
     const { name, description } = req.body;
     const category = await Category.create({
+      user: req.user._id,
       name,
       description,
     });
