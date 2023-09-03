@@ -5,8 +5,8 @@ import { useContext } from 'react';
 import { AuthContext } from '../../App';
 
 const Home = () => {
-  const { auth } = useContext(AuthContext);
-  return !auth ? (
+  const { user } = useContext(AuthContext);
+  return !user.auth ? (
     <Navigate to={'/login'} />
   ) : (
     <>

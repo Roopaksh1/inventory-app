@@ -7,7 +7,7 @@ import { POST_SIGN_UP } from '../../utils/constant';
 import { toast } from 'react-toastify';
 
 const SignUp = () => {
-  const { auth, setAuth } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const name = useRef();
   const password = useRef();
   const confirmPassword = useRef();
@@ -15,6 +15,10 @@ const SignUp = () => {
     e.preventDefault();
     if (name.current.value == '') {
       toast.error('Username required.', { toastId: 432 });
+      return;
+    }
+    if (name.current.value.match(/\s/)) {
+      toast.error('No spaces are allowed in the username', { toastId: 423 });
       return;
     }
     if (
@@ -35,12 +39,12 @@ const SignUp = () => {
       password: password.current.value,
     })
       .then((res) => {
-        toast.success(res.data);
-        setAuth(true);
+        toast.success('You have signed up.');
+        setUser(res.data);
       })
       .catch((err) => toast.error(err.response.data.message));
   };
-  return !auth ? (
+  return !user.auth ? (
     <section className="bg-gray-50 dark:bg-gray-900 flex-grow flex justify-center flex-col">
       <div className="flex flex-col items-center justify-center px-6 py-8 lg:py-0">
         <a
@@ -82,7 +86,7 @@ const SignUp = () => {
                   <br />
                   <span className="font-light text-xs">
                     Password must be at least 8 characters long and contain one
-                    uppercase, one lowercase and a number. White spaces are not
+                    uppercase, one lowercase and a number. Spaces are not
                     allowed.
                   </span>
                 </label>

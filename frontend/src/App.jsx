@@ -5,24 +5,28 @@ import { GET_AUTH_STATUS } from './utils/constant';
 import { ToastContainer, toast } from 'react-toastify';
 
 export const AuthContext = createContext({
-  isAuth: false,
+  user: {
+    auth: false,
+    name: '',
+  },
+  setUser: () => {},
 });
 
 const App = () => {
-  const [auth, setAuth] = useState(false);
+  const [user, setUser] = useState(false);
   useEffect(() => {
     API_CLIENT.get(GET_AUTH_STATUS)
-      .then((res) => setAuth(res.data))
+      .then((res) => setUser(res.data))
       .catch((err) => {
         if (err?.response?.status == '401') {
-          setAuth(false);
+          setUser({ auth: false, name: '' });
         } else if (err.request) {
           toast.error('Server Error', { toastId: 123 });
         }
       });
   }, []);
   return (
-    <AuthContext.Provider value={{ auth, setAuth }}>
+    <AuthContext.Provider value={{ user, setUser }}>
       <Router />
       <ToastContainer
         position="top-center"

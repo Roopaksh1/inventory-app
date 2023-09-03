@@ -15,7 +15,7 @@ import { Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const Category = () => {
-  const { auth, setAuth } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const [state, dispatch] = useReducer(categoryReducer, initialCategoryState);
   useEffect(() => {
     const loadCategory = () => {
@@ -23,7 +23,7 @@ const Category = () => {
         .then((res) => dispatch({ type: 'data_fetched', payload: res.data }))
         .catch((err) => {
           if (err?.response?.status == '401') {
-            setAuth(false);
+            setUser({ auth: false, name: '' });
           } else if (err.request) {
             toast.error('Server Error', { toastId: 123 });
           }
@@ -43,7 +43,7 @@ const Category = () => {
       )
       .catch((err) => {
         if (err?.response?.status == '401') {
-          setAuth(false);
+          setUser({ auth: false, name: '' });
         } else if (err.request) {
           toast.error('Server Error', { toastId: 123 });
         }
@@ -74,7 +74,7 @@ const Category = () => {
     ));
   };
 
-  return !auth ? (
+  return !user.auth ? (
     <Navigate to={'/login'} />
   ) : state.loading || !state.category ? (
     <Loading />

@@ -7,7 +7,7 @@ import { API_CLIENT } from '../../utils/api';
 import { POST_LOGIN } from '../../utils/constant';
 
 const Login = () => {
-  const { auth, setAuth } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const name = useRef();
   const password = useRef();
 
@@ -18,12 +18,12 @@ const Login = () => {
       password: password.current.value,
     })
       .then((res) => {
-        toast.success(res.data, { toastId: 19 });
-        setAuth(true);
+        toast.success('You have logged in', { toastId: 19 });
+        setUser(res.data);
       })
       .catch((err) => toast.error(err.response.data.message, { toastId: 20 }));
   };
-  return !auth ? (
+  return !user.auth ? (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img className="mx-auto h-10 w-auto" src={image} alt="InStock Logo" />

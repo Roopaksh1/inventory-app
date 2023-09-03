@@ -5,7 +5,13 @@ const bcrypt = require('bcryptjs');
 const generateToken = require('../utils/jwtConfig');
 
 exports.postSignUp = [
-  body('name').trim().escape().notEmpty().withMessage('Username Required'),
+  body('name')
+    .trim()
+    .escape()
+    .notEmpty()
+    .withMessage('Username Required')
+    .custom((value) => !/\s/.test(value))
+    .withMessage('No spaces are allowed in the username'),
   body('password')
     .trim()
     .notEmpty()
@@ -14,7 +20,7 @@ exports.postSignUp = [
     .withMessage('Password must be atleast 8 characters long')
     .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/)
     .withMessage(
-      'One uppercase, One lowercase and a number. Whitespaces are not allowed.'
+      'One uppercase, One lowercase and a number. Spaces are not allowed.'
     ),
   asyncHandler(async (req, res) => {
     const error = validationResult(req);
@@ -36,7 +42,7 @@ exports.postSignUp = [
     });
     const token = generateToken(user);
     res.cookie('jwt', token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 }); // 1 day
-    res.json('You have signed up.');
+    res.json({ auth: true, name: user.name });
   }),
 ];
 
@@ -54,7 +60,7 @@ exports.postLogIn = asyncHandler(async (req, res) => {
   }
   const token = generateToken(user);
   res.cookie('jwt', token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 }); // 1 day
-  res.json('You have logged in.');
+  res.json({ auth: true, name: user.name });
 });
 
 exports.getLogOut = (req, res) => {
@@ -65,5 +71,5 @@ exports.getLogOut = (req, res) => {
 
 // auth status
 exports.getLoggedIn = (req, res) => {
-  res.json(req.isAuthenticated());
+  res.json({ auth: req.isAuthenticated(), name: req.username });
 };

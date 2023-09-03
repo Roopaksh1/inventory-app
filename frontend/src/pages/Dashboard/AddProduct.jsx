@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { AuthContext } from '../../App';
 
 const AddProduct = () => {
-  const { setAuth } = useContext(AuthContext);
+  const { setUser } = useContext(AuthContext);
   const { setView, dispatch } = useContext(ProductContext);
   const [category, setCategory] = useState(null);
   useEffect(() => {
@@ -16,7 +16,7 @@ const AddProduct = () => {
       .then((res) => setCategory(res.data))
       .catch((err) => {
         if (err?.response?.status == '401') {
-          setAuth(false);
+          setUser({ auth: false, name: '' });
         } else if (err.request) {
           toast.error('Server Error', { toastId: 123 });
         }
@@ -48,7 +48,7 @@ const AddProduct = () => {
       })
       .catch((err) => {
         if (err?.response?.status == '401') {
-          setAuth(false);
+          setUser({ auth: false, name: '' });
         } else if (err.request) {
           toast.error('Server Error', { toastId: 123 });
         }

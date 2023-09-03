@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { AuthContext } from '../../App';
 
 const DeleteProduct = ({ product }) => {
-  const { setAuth } = useContext(AuthContext);
+  const { setUser } = useContext(AuthContext);
   const { setView, dispatch } = useContext(ProductContext);
   const view = useRef();
   const handleClick = (e) => {
@@ -41,7 +41,7 @@ const DeleteProduct = ({ product }) => {
       })
       .catch((err) => {
         if (err?.response?.status == '401') {
-          setAuth(false);
+          setUser({ auth: false, name: '' });
         } else if (err.request) {
           toast.error('Server Error', { toastId: 123 });
         }

@@ -8,7 +8,7 @@ import { AuthContext } from '../../App';
 
 const AddCategory = () => {
   const { setView, dispatch } = useContext(ProductContext);
-  const { setAuth } = useContext(AuthContext);
+  const { setUser } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -57,7 +57,7 @@ const AddCategory = () => {
       })
       .catch((err) => {
         if (err?.response?.status == '401') {
-          setAuth(false);
+          setUser({ auth: false, name: '' });
         } else if (err.request) {
           toast.error('Server Error', { toastId: 123 });
         }

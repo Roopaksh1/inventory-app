@@ -28,7 +28,7 @@ export const ProductContext = createContext({
 });
 
 const Dashboard = () => {
-  const { auth, setAuth } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const [productName, setProductName] = useState('');
   const [view, setView] = useState(null);
   const [state, dispatch] = useReducer(productReducer, initialProductState);
@@ -45,7 +45,7 @@ const Dashboard = () => {
         )
         .catch((err) => {
           if (err?.response?.status == '401') {
-            setAuth(false);
+            setUser({ auth: false, name: '' });
           } else if (err.request) {
             toast.error('Server Error', { toastId: 123 });
           }
@@ -71,7 +71,7 @@ const Dashboard = () => {
     return sum;
   };
 
-  return !auth ? (
+  return !user.auth ? (
     <Navigate to={'/login'} />
   ) : state.loading || !state.data ? (
     <Loading />
