@@ -44,7 +44,12 @@ exports.postSignUp = [
       email,
     });
     const token = generateToken(user);
-    res.cookie('jwt', token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 }); // 1 day
+    res.cookie('jwt', token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24,
+      sameSite: 'none',
+      secure: true,
+    }); // 1 day
     res.json({ auth: true, name: user.name });
   }),
 ];
@@ -62,7 +67,12 @@ exports.postLogIn = asyncHandler(async (req, res) => {
     throw new Error('Invalid Password.');
   }
   const token = generateToken(user);
-  res.cookie('jwt', token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 }); // 1 day
+  res.cookie('jwt', token, {
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24,
+    sameSite: 'none',
+    secure: true,
+  }); // 1 day
   res.json({ auth: true, name: user.name });
 });
 
